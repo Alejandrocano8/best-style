@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Best Style — Prototipo de mockups</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1E2A33;
+  --ink-soft:#66798A;
+  --pine:#4FA3D1;
+  --pine-dark:#2C6E93;
+  --pine-pale:#EAF4FB;
+  --rose-line:#D7EAF5;
+  --rose-mid:#5FA8D3;
+  --honey:#6E7FD1;
+  --honey-pale:#E9EBFB;
+  --linen:#FFFFFF;
+  --surface:#FFFFFF;
+  --line:#E1E8ED;
+  --line-soft:#EDF2F6;
+  --brick:#A8503F;
+  --brick-pale:#F3E1DC;
+  --slate:#7C8FA6;
+  --slate-pale:#EAEEF3;
+  --radius-lg:14px;
+  --radius-md:10px;
+  --radius-sm:8px;
+  --shadow-float:0 6px 16px rgba(0,0,0,0.06);
+  font-family:'Inter',sans-serif;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--linen);color:var(--ink);}
+h1,h2,h3,.display{font-family:'Fraunces',serif;letter-spacing:-0.01em;}
+p,span,div,button,input,select,textarea,label,a{font-family:'Inter',sans-serif;}
+a{text-decoration:none;color:inherit;}
+button{font-family:'Inter',sans-serif;cursor:pointer;}
+img{max-width:100%;display:block;}
+
+/* ---------- DEMO SWITCHER (herramienta de navegación del prototipo, no del producto) ---------- */
+#demo-bar{
+  position:sticky;top:0;z-index:999;
+  background:var(--pine-dark);color:#EFEAdd;
+  display:flex;align-items:center;gap:10px;
+  padding:10px 18px;overflow-x:auto;
+  font-size:12.5px;
+}
+#demo-bar .demo-label{
+  color:#BFD3CC;flex:0 0 auto;padding-right:6px;border-right:1px solid rgba(255,255,255,0.2);
+  white-space:nowrap;
+}
+#demo-bar button{
+  flex:0 0 auto;background:transparent;border:1px solid rgba(255,255,255,0.28);
+  color:#EFEAdd;padding:6px 12px;border-radius:999px;font-size:12.5px;white-space:nowrap;
+  transition:background .15s ease;
+}
+#demo-bar button:hover{background:rgba(255,255,255,0.12);}
+#demo-bar button.active{background:var(--honey);border-color:var(--honey);color:#fff;font-weight:600;}
+
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ---------- SHARED: BUTTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:12px 22px;border-radius:999px;border:none;font-weight:600;font-size:14.5px;
+  transition:transform .12s ease, box-shadow .12s ease;
+}
+.btn-primary{background:var(--pine);color:#fff;}
+.btn-primary:hover{background:var(--pine-dark);}
+.btn-accent{background:var(--honey);color:#fff;}
+.btn-accent:hover{filter:brightness(0.96);}
+.btn-ghost{background:transparent;color:var(--pine-dark);border:1.5px solid var(--line);}
+.btn-ghost:hover{border-color:var(--pine);}
+.btn-sm{padding:8px 16px;font-size:13px;border-radius:999px;}
+.btn-block{width:100%;}
+
+/* ---------- PUBLIC TOPNAV ---------- */
+.pub-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 48px;background:var(--linen);
+}
+.brand{display:flex;align-items:center;gap:10px;}
+.brand-mark{
+  width:38px;height:38px;border-radius:11px;background:var(--pine);
+  display:flex;align-items:center;justify-content:center;color:#fff;font-family:'Fraunces',serif;font-weight:600;font-size:18px;
+}
+.brand-name{font-family:'Fraunces',serif;font-size:19px;font-weight:600;color:var(--pine-dark);}
+.pub-links{display:flex;gap:32px;align-items:center;}
+.pub-links a{font-size:14.5px;color:var(--ink-soft);font-weight:500;}
+.pub-links a:hover{color:var(--pine-dark);}
+
+/* ---------- LANDING (rediseño editorial/corporativo) ---------- */
+.lp-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:22px 56px;border-bottom:1px solid var(--line-soft);
+}
+.lp-nav .pub-links a.btn{padding:9px 20px;}
+
+.lp-hero{
+  max-width:1240px;margin:0 auto;padding:64px 56px 40px;
+  display:grid;grid-template-columns:1.05fr 0.95fr;gap:64px;align-items:center;
+}
+.lp-hero h1{font-size:46px;line-height:1.14;font-weight:500;color:var(--ink);margin:0 0 22px;max-width:520px;}
+.lp-hero p.lead{font-size:16.5px;color:var(--ink-soft);line-height:1.65;max-width:440px;margin:0 0 32px;}
+.lp-hero-actions{display:flex;gap:14px;margin-bottom:36px;}
+.lp-trust{display:flex;gap:28px;padding-top:24px;border-top:1px solid var(--line-soft);max-width:480px;}
+.lp-trust div{font-size:12.5px;color:var(--ink-soft);}
+.lp-trust b{display:block;font-family:'Fraunces',serif;font-size:22px;font-weight:500;color:var(--ink);margin-bottom:2px;}
+
+.lp-photo{
+  background:var(--pine-pale);border-radius:var(--radius-lg);height:440px;position:relative;
+  display:flex;align-items:center;justify-content:center;font-size:64px;color:var(--rose-mid);
+}
+.lp-photo-card{
+  position:absolute;left:-28px;bottom:32px;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius-md);padding:16px 20px;max-width:230px;box-shadow:var(--shadow-float);
+}
+.lp-photo-card .name{font-weight:600;font-size:13.5px;color:var(--ink);margin-bottom:2px;}
+.lp-photo-card .meta{font-size:12px;color:var(--ink-soft);}
+
+.lp-section{max-width:1240px;margin:0 auto;padding:56px 56px;}
+.lp-section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:36px;
+  border-bottom:1px solid var(--line-soft);padding-bottom:22px;}
+.lp-section-head h2{font-size:28px;color:var(--ink);margin:0;font-weight:500;max-width:420px;}
+.lp-section-head p{color:var(--ink-soft);font-size:14.5px;line-height:1.6;max-width:360px;margin:0;}
+
+.lp-service-row{
+  display:grid;grid-template-columns:64px 1fr auto;gap:22px;align-items:center;
+  padding:26px 0;border-bottom:1px solid var(--line-soft);
+}
+.lp-service-row:first-of-type{padding-top:0;}
+.lp-service-icon{width:56px;height:56px;border-radius:var(--radius-md);background:var(--pine-pale);
+  display:flex;align-items:center;justify-content:center;font-size:24px;}
+.lp-service-row h3{font-size:17.5px;margin:0 0 6px;color:var(--ink);font-weight:600;}
+.lp-service-row p{font-size:14px;color:var(--ink-soft);margin:0;max-width:420px;line-height:1.55;}
+.lp-service-price{font-size:13.5px;color:var(--ink-soft);white-space:nowrap;}
+.lp-service-price b{color:var(--ink);font-weight:700;}
+
+.lp-steps{display:flex;max-width:1240px;margin:0 auto;padding:0 56px 56px;}
+.lp-step{flex:1;padding-right:28px;position:relative;}
+.lp-step:not(:last-child)::after{content:"";position:absolute;top:6px;right:0;left:36px;height:1px;background:var(--line);}
+.lp-step-num{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--ink);color:var(--ink);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;margin-bottom:16px;}
+.lp-step h4{margin:0 0 8px;font-size:15px;color:var(--ink);font-weight:600;}
+.lp-step p{margin:0;font-size:13.5px;color:var(--ink-soft);line-height:1.55;max-width:220px;}
+
+.lp-quote{max-width:760px;margin:0 auto;padding:64px 56px;text-align:center;}
+.lp-quote p{font-family:'Fraunces',serif;font-size:26px;font-weight:400;line-height:1.5;color:var(--ink);margin:0 0 18px;}
+.lp-quote span{font-size:13.5px;color:var(--ink-soft);}
+
+.lp-cta{
+  max-width:1240px;margin:0 auto 64px;padding:56px;border:1px solid var(--line);border-radius:var(--radius-lg);
+  display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+}
+.lp-cta h2{font-size:26px;color:var(--ink);margin:0 0 6px;font-weight:500;}
+.lp-cta p{color:var(--ink-soft);margin:0;font-size:14.5px;}
+
+.site-footer{padding:28px 56px;color:var(--ink-soft);font-size:13px;display:flex;justify-content:space-between;
+  max-width:1240px;margin:0 auto;border-top:1px solid var(--line-soft);}
+
+/* ---------- AUTH SCREENS ---------- */
+.auth-wrap{min-height:calc(100vh - 44px);display:grid;grid-template-columns:1fr 1fr;}
+.auth-visual{background:var(--pine-dark);position:relative;overflow:hidden;display:flex;flex-direction:column;
+  justify-content:space-between;padding:44px;}
+.auth-visual .quote{position:relative;color:#fff;font-family:'Fraunces',serif;font-size:24px;line-height:1.4;max-width:380px;font-weight:400;}
+.auth-visual .quote-by{position:relative;color:#C6D8D2;font-size:13px;margin-top:14px;}
+.auth-form-side{display:flex;align-items:center;justify-content:center;padding:40px;}
+.auth-card{width:100%;max-width:380px;}
+.auth-card h1{font-size:28px;color:var(--pine-dark);margin:0 0 8px;}
+.auth-card .sub{color:var(--ink-soft);font-size:14px;margin:0 0 30px;}
+.field{margin-bottom:18px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink-soft);margin-bottom:7px;}
+.field input,.field select,.field textarea{
+  width:100%;padding:12px 14px;border-radius:var(--radius-sm);border:1.5px solid var(--line);
+  font-size:14.5px;background:#fff;color:var(--ink);
+}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--pine);outline-offset:1px;border-color:var(--pine);}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.role-tabs{display:flex;gap:8px;margin-bottom:24px;background:var(--pine-pale);padding:5px;border-radius:999px;}
+.role-tabs button{flex:1;padding:9px;border-radius:999px;border:none;background:transparent;font-size:13.5px;font-weight:600;color:var(--pine-dark);}
+.role-tabs button.active{background:var(--surface);box-shadow:0 2px 6px rgba(0,0,0,0.06);}
+.auth-foot{margin-top:22px;font-size:13.5px;color:var(--ink-soft);text-align:center;}
+.auth-foot a{color:var(--pine);font-weight:600;}
+
+/* ---------- APP SHELL (dashboard / gestión) ---------- */
+.app-shell{display:grid;grid-template-columns:236px 1fr;min-height:calc(100vh - 44px);}
+.sidebar{background:var(--pine-dark);color:#DCE8E2;padding:24px 16px;display:flex;flex-direction:column;}
+.sidebar .brand{padding:0 8px 24px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.sidebar .brand-name{color:#fff;}
+.side-section-label{font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:#7FA098;padding:14px 12px 6px;}
+.side-link{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;font-size:14px;font-weight:500;margin-bottom:2px;color:#DCE8E2;}
+.side-link .ic{width:18px;text-align:center;}
+.side-link:hover{background:rgba(255,255,255,0.06);}
+.side-link.active{background:var(--pine);color:#fff;}
+.sidebar-foot{margin-top:auto;padding:12px;border-top:1px solid rgba(255,255,255,0.1);display:flex;gap:10px;align-items:center;}
+.avatar{width:34px;height:34px;border-radius:50%;background:var(--honey);color:#fff;font-weight:700;font-size:13px;
+  display:flex;align-items:center;justify-content:center;flex:0 0 auto;}
+.side-user-name{font-size:13px;color:#fff;font-weight:600;}
+.side-user-role{font-size:11.5px;color:#93B3AB;}
+
+.main-area{padding:32px 40px;overflow-x:auto;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;}
+.topbar h1{font-size:25px;color:var(--pine-dark);margin:0;}
+.topbar .sub{color:var(--ink-soft);font-size:13.5px;margin-top:4px;}
+.search-input{padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-size:13.5px;min-width:220px;}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:30px;}
+.kpi-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius-md);padding:20px;}
+.kpi-card .kpi-label{font-size:12.5px;color:var(--ink-soft);margin-bottom:10px;}
+.kpi-card .kpi-value{font-family:'Fraunces',serif;font-size:28px;color:var(--pine-dark);}
+.kpi-card .kpi-delta{font-size:12px;color:var(--pine);margin-top:6px;font-weight:600;}
+.kpi-card .kpi-delta.down{color:var(--brick);}
+
+.panel{background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius-md);padding:24px;margin-bottom:22px;}
+.panel-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.panel-head h3{font-size:16.5px;margin:0;color:var(--pine-dark);}
+.panel-head a.see-all{font-size:13px;color:var(--pine);font-weight:600;}
+
+.two-col{display:grid;grid-template-columns:1.4fr 1fr;gap:22px;}
+
+/* status chips */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:600;}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;}
+.chip-pending{background:var(--honey-pale);color:#4652A6;}
+.chip-pending::before{background:var(--honey);}
+.chip-confirmed{background:var(--pine-pale);color:var(--pine-dark);}
+.chip-confirmed::before{background:var(--pine);}
+.chip-cancelled{background:var(--brick-pale);color:#7A3527;}
+.chip-cancelled::before{background:var(--brick);}
+.chip-done{background:var(--slate-pale);color:#31495A;}
+.chip-done::before{background:var(--slate);}
+
+/* lists */
+.appt-row{display:flex;align-items:center;gap:14px;padding:13px 0;border-bottom:1px solid var(--line-soft);}
+.appt-row:last-child{border-bottom:none;}
+.appt-time{width:64px;flex:0 0 auto;font-weight:700;color:var(--pine-dark);font-size:14px;}
+.appt-info{flex:1;}
+.appt-info .name{font-weight:600;font-size:14px;color:var(--ink);}
+.appt-info .meta{font-size:12.5px;color:var(--ink-soft);}
+
+/* pet cards */
+.pets-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.pet-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius-lg);overflow:hidden;}
+.pet-photo{height:130px;background:linear-gradient(135deg,var(--pine-pale),var(--slate-pale));display:flex;align-items:center;justify-content:center;font-size:44px;}
+.pet-body{padding:18px;}
+.pet-body h4{margin:0 0 4px;font-size:16px;color:var(--pine-dark);}
+.pet-body .meta{font-size:12.5px;color:var(--ink-soft);margin-bottom:12px;}
+.pet-body .actions{display:flex;gap:8px;}
+.add-pet-card{border:1.5px solid var(--line);border-radius:var(--radius-lg);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;min-height:220px;color:var(--ink-soft);gap:10px;}
+.add-pet-card .plus{width:44px;height:44px;border-radius:50%;background:var(--pine-pale);color:var(--pine-dark);
+  font-size:22px;display:flex;align-items:center;justify-content:center;}
+
+/* form card generic */
+.form-card{background:var(--surface);border:1px solid var(--line-soft);border-radius:var(--radius-lg);padding:32px;max-width:640px;}
+.form-card h3{margin:0 0 4px;font-size:19px;color:var(--pine-dark);}
+.form-card .sub{color:var(--ink-soft);font-size:13.5px;margin:0 0 26px;}
+.form-actions{display:flex;gap:12px;margin-top:8px;}
+
+/* history / timeline */
+.pet-header{display:flex;gap:20px;align-items:center;background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:var(--radius-lg);padding:26px;margin-bottom:24px;}
+.pet-header .photo-lg{width:90px;height:90px;border-radius:20px;background:linear-gradient(135deg,var(--pine-pale),var(--honey-pale));
+  display:flex;align-items:center;justify-content:center;font-size:46px;flex:0 0 auto;}
+.pet-header h2{margin:0 0 6px;font-size:22px;color:var(--pine-dark);}
+.pet-header .tags{display:flex;gap:8px;flex-wrap:wrap;}
+.tag{background:var(--pine-pale);color:var(--pine-dark);font-size:12px;padding:4px 11px;border-radius:999px;font-weight:600;}
+
+.timeline{position:relative;padding-left:26px;}
+.timeline::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--line-soft);}
+.tl-item{position:relative;margin-bottom:22px;}
+.tl-item::before{content:"";position:absolute;left:-26px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--pine);border:3px solid var(--pine-pale);}
+.tl-item .tl-date{font-size:12px;color:var(--ink-soft);margin-bottom:4px;}
+.tl-item .tl-title{font-weight:600;font-size:14.5px;color:var(--ink);}
+.tl-item .tl-desc{font-size:13px;color:var(--ink-soft);margin-top:3px;}
+
+/* booking flow */
+.steps-bar{display:flex;align-items:center;margin-bottom:34px;max-width:640px;}
+.step-item{display:flex;align-items:center;gap:10px;flex:1;}
+.step-circle{width:30px;height:30px;border-radius:50%;background:var(--line-soft);color:var(--ink-soft);
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex:0 0 auto;}
+.step-item.done .step-circle{background:var(--pine);color:#fff;}
+.step-item.current .step-circle{background:var(--honey);color:#fff;}
+.step-label{font-size:12.5px;color:var(--ink-soft);}
+.step-item.current .step-label,.step-item.done .step-label{color:var(--ink);font-weight:600;}
+.step-line{flex:1;height:2px;background:var(--line-soft);}
+.step-item.done + .step-line{background:var(--pine);}
+
+.pick-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;max-width:640px;margin-bottom:26px;}
+.pick-card{border:1.5px solid var(--line);border-radius:var(--radius-md);padding:16px;text-align:center;background:#fff;}
+.pick-card.selected{border-color:var(--pine);background:var(--pine-pale);}
+.pick-card .ic{font-size:26px;margin-bottom:8px;}
+.pick-card .name{font-size:13.5px;font-weight:600;color:var(--ink);}
+.pick-card .price{font-size:12px;color:var(--ink-soft);margin-top:3px;}
+
+.time-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:640px;margin-bottom:26px;}
+.time-slot{padding:10px;border:1.5px solid var(--line);border-radius:var(--radius-sm);text-align:center;font-size:13.5px;background:#fff;}
+.time-slot.selected{background:var(--pine);color:#fff;border-color:var(--pine);}
+.time-slot.taken{background:var(--line-soft);color:var(--ink-soft);text-decoration:line-through;}
+
+.summary-box{background:var(--pine-pale);border-radius:var(--radius-md);padding:20px;max-width:640px;margin-bottom:26px;}
+.summary-row{display:flex;justify-content:space-between;font-size:14px;padding:7px 0;color:var(--ink);}
+.summary-row.total{font-weight:700;border-top:1px solid var(--rose-line);margin-top:6px;padding-top:12px;}
+
+/* tables */
+table.data-table{width:100%;border-collapse:collapse;font-size:13.5px;}
+table.data-table th{text-align:left;padding:11px 14px;color:var(--ink-soft);font-weight:600;font-size:12px;
+  text-transform:none;border-bottom:1.5px solid var(--line-soft);}
+table.data-table td{padding:13px 14px;border-bottom:1px solid var(--line-soft);color:var(--ink);}
+table.data-table tr:last-child td{border-bottom:none;}
+.table-toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;}
+.filter-pills{display:flex;gap:8px;}
+.filter-pill{padding:7px 14px;border-radius:999px;font-size:12.5px;border:1.5px solid var(--line);background:#fff;color:var(--ink-soft);}
+.filter-pill.active{background:var(--pine-dark);border-color:var(--pine-dark);color:#fff;}
+.row-name{display:flex;align-items:center;gap:10px;}
+.row-avatar{width:30px;height:30px;border-radius:50%;background:var(--slate-pale);color:#31495A;font-size:11.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;}
+.icon-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:#fff;display:inline-flex;
+  align-items:center;justify-content:center;font-size:13px;color:var(--ink-soft);}
+
+/* calendar mini */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;font-size:12px;}
+.cal-day-head{text-align:center;color:var(--ink-soft);font-weight:600;padding-bottom:6px;}
+.cal-cell{background:var(--linen);border-radius:8px;min-height:74px;padding:6px;font-size:11px;color:var(--ink-soft);position:relative;}
+.cal-cell.today{outline:2px solid var(--pine);}
+.cal-dot{background:var(--pine);color:#fff;border-radius:5px;padding:2px 5px;font-size:10px;margin-top:3px;display:inline-block;}
+.cal-dot.honey{background:var(--honey);color:#fff;}
+
+/* toggle */
+.toggle{width:40px;height:22px;border-radius:999px;background:var(--pine);position:relative;flex:0 0 auto;}
+.toggle::after{content:"";position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:#fff;}
+.toggle.off{background:var(--line);}
+.toggle.off::after{left:2px;right:auto;}
+
+/* role pill */
+.role-pill{font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;}
+.role-admin{background:var(--brick-pale);color:#7A3527;}
+.role-vet{background:var(--slate-pale);color:#31495A;}
+.role-cliente{background:var(--pine-pale);color:var(--pine-dark);}
+
+@media (max-width:960px){
+  .lp-hero{grid-template-columns:1fr;}
+  .lp-steps{flex-direction:column;gap:24px;}
+  .kpi-grid,.two-col,.pets-grid,.pick-grid,.time-grid{grid-template-columns:1fr 1fr;}
+  .app-shell{grid-template-columns:1fr;}
+  .sidebar{display:none;}
+  .auth-wrap{grid-template-columns:1fr;}
+  .auth-visual{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="demo-bar">
+  <span class="demo-label">Prototipo · ir a pantalla</span>
+  <button data-target="landing" class="active">1. Landing</button>
+  <button data-target="login">2. Login</button>
+  <button data-target="registro-cliente">3. Registro cliente</button>
+  <button data-target="dashboard-cliente">4. Dashboard cliente</button>
+  <button data-target="mascotas">5. Mis mascotas</button>
+  <button data-target="registro-mascota">6. Registro mascota</button>
+  <button data-target="historial-mascota">7. Historial mascota</button>
+  <button data-target="agendar-cita">8. Agendar cita</button>
+  <button data-target="mis-citas">9. Mis citas</button>
+  <button data-target="dashboard-admin">10. Panel admin</button>
+  <button data-target="gestion-citas">11. Gestión citas</button>
+  <button data-target="gestion-clientes">12. Gestión clientes</button>
+  <button data-target="gestion-servicios">13. Gestión servicios</button>
+  <button data-target="gestion-usuarios">14. Usuarios y roles</button>
+</div>
+
+<!-- ============ 1. LANDING ============ -->
+<section class="screen active" id="landing">
+  <nav class="lp-nav">
+    <div class="brand"><div class="brand-mark">B</div><div class="brand-name">Best Style</div></div>
+    <div class="pub-links">
+      <a href="#">Servicios</a>
+      <a href="#">Cómo funciona</a>
+      <a href="#">Ubicación</a>
+      <a href="#" data-goto="login">Iniciar sesión</a>
+      <a href="#" data-goto="agendar-cita" class="btn btn-primary btn-sm">Agendar cita</a>
+    </div>
+  </nav>
+
+  <div class="lp-hero">
+    <div>
+      <h1>Estética veterinaria para el bienestar de tu mascota.</h1>
+      <p class="lead">Best Style organiza en un mismo lugar el registro de tu mascota, sus citas y su historial de servicios — sin llamadas, sin papeles ni horarios encimados.</p>
+      <div class="lp-hero-actions">
+        <a href="#" data-goto="agendar-cita" class="btn btn-primary">Agendar una cita</a>
+        <a href="#" data-goto="registro-cliente" class="btn btn-ghost">Crear cuenta</a>
+      </div>
+      <div class="lp-trust">
+        <div><b>3</b>servicios especializados</div>
+        <div><b>+500</b>mascotas atendidas</div>
+        <div><b>Pradera</b>Valle del Cauca</div>
+      </div>
+    </div>
+    <div class="lp-photo">
+      🐾
+      <div class="lp-photo-card">
+        <div class="name">Cita confirmada</div>
+        <div class="meta">Rocky · Corte de pelo · Vie 18, 11:00 am</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="lp-section">
+    <div class="lp-section-head">
+      <h2>Nuestros servicios</h2>
+      <p>Tratamientos pensados para la higiene, salud y bienestar de tu mascota.</p>
+    </div>
+    <div class="lp-service-row">
+      <div class="lp-service-icon">🛁</div>
+      <div><h3>Baño</h3><p>Baño con productos hipoalergénicos, secado y cepillado según el tipo de pelaje.</p></div>
+      <div class="lp-service-price">Desde <b>$25.000</b></div>
+    </div>
+    <div class="lp-service-row">
+      <div class="lp-service-icon">✂️</div>
+      <div><h3>Corte de pelo</h3><p>Corte a tijera o máquina, adaptado a la raza y preferencia del propietario.</p></div>
+      <div class="lp-service-price">Desde <b>$35.000</b></div>
+    </div>
+    <div class="lp-service-row">
+      <div class="lp-service-icon">👂</div>
+      <div><h3>Limpieza de oídos</h3><p>Limpieza preventiva para evitar infecciones y molestias auditivas.</p></div>
+      <div class="lp-service-price">Desde <b>$15.000</b></div>
+    </div>
+  </div>
+
+  <div class="lp-steps">
+    <div class="lp-step"><div class="lp-step-num">1</div><h4>Crea tu cuenta</h4><p>Regístrate como propietario en menos de un minuto.</p></div>
+    <div class="lp-step"><div class="lp-step-num">2</div><h4>Registra tu mascota</h4><p>Guarda su información y quedará lista para agendar.</p></div>
+    <div class="lp-step"><div class="lp-step-num">3</div><h4>Agenda su cita</h4><p>Elige servicio, fecha y hora disponible en segundos.</p></div>
+  </div>
+
+  <div class="lp-quote">
+    <p>"Antes perdíamos el hilo del historial de cada mascota. Ahora queda todo registrado y podemos consultarlo en segundos."</p>
+    <span>— Equipo Best Style</span>
+  </div>
+
+  <div class="lp-cta">
+    <div>
+      <h2>Tu mascota merece un cuidado sin contratiempos</h2>
+      <p>Agenda su próxima cita en un par de minutos.</p>
+    </div>
+    <a href="#" data-goto="agendar-cita" class="btn btn-primary">Agendar una cita</a>
+  </div>
+
+  <div class="site-footer">
+    <span>© 2026 Best Style — Pradera, Valle del Cauca</span>
+    <span>Baño · Corte de pelo · Limpieza de oídos</span>
+  </div>
+</section>
+
+<!-- ============ 2. LOGIN ============ -->
+<section class="screen" id="login">
+  <div class="auth-wrap">
+    <div class="auth-visual">
+      <div class="brand"><div class="brand-mark" style="background:rgba(255,255,255,0.15);color:#fff;">B</div><div class="brand-name" style="color:#fff;">Best Style</div></div>
+      <div>
+        <div class="quote">"Llevar el historial de cada mascota al día ya no depende de la memoria de nadie."</div>
+        <div class="quote-by" style="color:#F3D9DF;">— Equipo Best Style</div>
+      </div>
+    </div>
+    <div class="auth-form-side">
+      <div class="auth-card">
+        <h1>Inicia sesión</h1>
+        <p class="sub">Accede según tu tipo de usuario para continuar.</p>
+        <div class="role-tabs">
+          <button class="active">Cliente</button>
+          <button>Veterinario</button>
+          <button>Administrador</button>
+        </div>
+        <div class="field"><label>Correo electrónico</label><input type="email" placeholder="nombre@correo.com"></div>
+        <div class="field"><label>Contraseña</label><input type="password" placeholder="••••••••"></div>
+        <a href="#" data-goto="dashboard-cliente" class="btn btn-primary btn-block">Ingresar</a>
+        <p class="auth-foot">¿No tienes cuenta? <a href="#" data-goto="registro-cliente">Regístrate aquí</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 3. REGISTRO CLIENTE ============ -->
+<section class="screen" id="registro-cliente">
+  <div class="auth-wrap">
+    <div class="auth-visual">
+      <div class="brand"><div class="brand-mark" style="background:rgba(255,255,255,0.15);color:#fff;">B</div><div class="brand-name" style="color:#fff;">Best Style</div></div>
+      <div>
+        <div class="quote">"Un solo registro y toda la información de tus mascotas queda en un mismo lugar."</div>
+        <div class="quote-by" style="color:#F3D9DF;">— Equipo Best Style</div>
+      </div>
+    </div>
+    <div class="auth-form-side">
+      <div class="auth-card" style="max-width:420px;">
+        <h1>Crea tu cuenta</h1>
+        <p class="sub">Regístrate como propietario para gestionar tus mascotas y citas.</p>
+        <div class="field-row">
+          <div class="field"><label>Nombres</label><input type="text" placeholder="Laura"></div>
+          <div class="field"><label>Apellidos</label><input type="text" placeholder="Gómez"></div>
+        </div>
+        <div class="field"><label>Cédula</label><input type="text" placeholder="1 234 567 890"></div>
+        <div class="field"><label>Teléfono</label><input type="text" placeholder="300 000 0000"></div>
+        <div class="field"><label>Correo electrónico</label><input type="email" placeholder="nombre@correo.com"></div>
+        <div class="field"><label>Contraseña</label><input type="password" placeholder="Crea una contraseña"></div>
+        <a href="#" data-goto="dashboard-cliente" class="btn btn-primary btn-block">Crear cuenta</a>
+        <p class="auth-foot">¿Ya tienes cuenta? <a href="#" data-goto="login">Inicia sesión</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- shared sidebar template will be duplicated per app screen -->
+
+<!-- ============ 4. DASHBOARD CLIENTE ============ -->
+<section class="screen" id="dashboard-cliente">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Menú</div>
+      <a class="side-link active" href="#" data-goto="dashboard-cliente"><span class="ic">🏠</span>Inicio</a>
+      <a class="side-link" href="#" data-goto="mascotas"><span class="ic">🐾</span>Mis mascotas</a>
+      <a class="side-link" href="#" data-goto="agendar-cita"><span class="ic">🗓️</span>Agendar cita</a>
+      <a class="side-link" href="#" data-goto="mis-citas"><span class="ic">📋</span>Mis citas</a>
+      <div class="sidebar-foot">
+        <div class="avatar">LG</div>
+        <div><div class="side-user-name">Laura Gómez</div><div class="side-user-role">Cliente</div></div>
+      </div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar">
+        <div><h1>Hola, Laura 👋</h1><div class="sub">Esto es lo que tienes programado esta semana.</div></div>
+        <a href="#" data-goto="agendar-cita" class="btn btn-primary btn-sm">+ Nueva cita</a>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Mascotas registradas</div><div class="kpi-value">2</div></div>
+        <div class="kpi-card"><div class="kpi-label">Próxima cita</div><div class="kpi-value">Vie 18</div><div class="kpi-delta">Corte de pelo · Rocky</div></div>
+        <div class="kpi-card"><div class="kpi-label">Citas realizadas</div><div class="kpi-value">7</div></div>
+        <div class="kpi-card"><div class="kpi-label">Citas pendientes</div><div class="kpi-value">1</div></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h3>Próximas citas</h3><a class="see-all" href="#" data-goto="mis-citas">Ver todas</a></div>
+          <div class="appt-row"><div class="appt-time">Vie 18<br>10:00</div><div class="appt-info"><div class="name">Rocky — Corte de pelo</div><div class="meta">Con: Vet. Ana Ríos</div></div><span class="chip chip-confirmed">Confirmada</span></div>
+          <div class="appt-row"><div class="appt-time">Mar 22<br>15:30</div><div class="appt-info"><div class="name">Mishi — Baño</div><div class="meta">Con: Vet. Carlos Peña</div></div><span class="chip chip-pending">Pendiente</span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Mis mascotas</h3><a class="see-all" href="#" data-goto="mascotas">Ver todas</a></div>
+          <div class="appt-row"><div class="appt-info"><div class="name">🐕 Rocky</div><div class="meta">Labrador · 3 años</div></div></div>
+          <div class="appt-row"><div class="appt-info"><div class="name">🐈 Mishi</div><div class="meta">Gato criollo · 1 año</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 5. GESTIÓN DE MASCOTAS ============ -->
+<section class="screen" id="mascotas">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Menú</div>
+      <a class="side-link" href="#" data-goto="dashboard-cliente"><span class="ic">🏠</span>Inicio</a>
+      <a class="side-link active" href="#" data-goto="mascotas"><span class="ic">🐾</span>Mis mascotas</a>
+      <a class="side-link" href="#" data-goto="agendar-cita"><span class="ic">🗓️</span>Agendar cita</a>
+      <a class="side-link" href="#" data-goto="mis-citas"><span class="ic">📋</span>Mis citas</a>
+      <div class="sidebar-foot"><div class="avatar">LG</div><div><div class="side-user-name">Laura Gómez</div><div class="side-user-role">Cliente</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar">
+        <div><h1>Mis mascotas</h1><div class="sub">Consulta o registra la información de tus mascotas.</div></div>
+        <a href="#" data-goto="registro-mascota" class="btn btn-primary btn-sm">+ Registrar mascota</a>
+      </div>
+      <div class="pets-grid">
+        <div class="pet-card">
+          <div class="pet-photo">🐕</div>
+          <div class="pet-body">
+            <h4>Rocky</h4>
+            <div class="meta">Labrador · Macho · 3 años</div>
+            <div class="actions">
+              <a href="#" data-goto="historial-mascota" class="btn btn-ghost btn-sm">Ver historial</a>
+              <a href="#" data-goto="agendar-cita" class="btn btn-primary btn-sm">Agendar</a>
+            </div>
+          </div>
+        </div>
+        <div class="pet-card">
+          <div class="pet-photo">🐈</div>
+          <div class="pet-body">
+            <h4>Mishi</h4>
+            <div class="meta">Gato criollo · Hembra · 1 año</div>
+            <div class="actions">
+              <a href="#" data-goto="historial-mascota" class="btn btn-ghost btn-sm">Ver historial</a>
+              <a href="#" data-goto="agendar-cita" class="btn btn-primary btn-sm">Agendar</a>
+            </div>
+          </div>
+        </div>
+        <a class="add-pet-card" href="#" data-goto="registro-mascota">
+          <div class="plus">+</div>
+          <span>Registrar nueva mascota</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 6. REGISTRO DE MASCOTA ============ -->
+<section class="screen" id="registro-mascota">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Menú</div>
+      <a class="side-link" href="#" data-goto="dashboard-cliente"><span class="ic">🏠</span>Inicio</a>
+      <a class="side-link active" href="#" data-goto="mascotas"><span class="ic">🐾</span>Mis mascotas</a>
+      <a class="side-link" href="#" data-goto="agendar-cita"><span class="ic">🗓️</span>Agendar cita</a>
+      <a class="side-link" href="#" data-goto="mis-citas"><span class="ic">📋</span>Mis citas</a>
+      <div class="sidebar-foot"><div class="avatar">LG</div><div><div class="side-user-name">Laura Gómez</div><div class="side-user-role">Cliente</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Registrar mascota</h1><div class="sub">Asocia una nueva mascota a tu perfil.</div></div></div>
+      <div class="form-card">
+        <h3>Datos de la mascota</h3>
+        <p class="sub">Esta información se usará en su historial y para las citas.</p>
+        <div class="field"><label>Nombre de la mascota</label><input type="text" placeholder="Ej: Rocky"></div>
+        <div class="field-row">
+          <div class="field"><label>Especie</label><select><option>Perro</option><option>Gato</option><option>Otro</option></select></div>
+          <div class="field"><label>Raza</label><input type="text" placeholder="Ej: Labrador"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Sexo</label><select><option>Macho</option><option>Hembra</option></select></div>
+          <div class="field"><label>Fecha de nacimiento</label><input type="date"></div>
+        </div>
+        <div class="field"><label>Observaciones (alergias, condiciones especiales)</label><textarea rows="3" placeholder="Opcional"></textarea></div>
+        <div class="form-actions">
+          <a href="#" data-goto="mascotas" class="btn btn-primary">Guardar mascota</a>
+          <a href="#" data-goto="mascotas" class="btn btn-ghost">Cancelar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 7. HISTORIAL DE MASCOTA ============ -->
+<section class="screen" id="historial-mascota">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Menú</div>
+      <a class="side-link" href="#" data-goto="dashboard-cliente"><span class="ic">🏠</span>Inicio</a>
+      <a class="side-link active" href="#" data-goto="mascotas"><span class="ic">🐾</span>Mis mascotas</a>
+      <a class="side-link" href="#" data-goto="agendar-cita"><span class="ic">🗓️</span>Agendar cita</a>
+      <a class="side-link" href="#" data-goto="mis-citas"><span class="ic">📋</span>Mis citas</a>
+      <div class="sidebar-foot"><div class="avatar">LG</div><div><div class="side-user-name">Laura Gómez</div><div class="side-user-role">Cliente</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Perfil de mascota</h1><div class="sub">Información y servicios de Rocky.</div></div>
+        <a href="#" data-goto="agendar-cita" class="btn btn-primary btn-sm">Agendar cita para Rocky</a>
+      </div>
+      <div class="pet-header">
+        <div class="photo-lg">🐕</div>
+        <div>
+          <h2>Rocky</h2>
+          <div class="tags">
+            <span class="tag">Labrador</span>
+            <span class="tag">Macho</span>
+            <span class="tag">3 años</span>
+            <span class="tag">Propietario: Laura Gómez</span>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Historial de servicios y citas</h3></div>
+        <div class="timeline">
+          <div class="tl-item"><div class="tl-date">18 sep 2026 · Pendiente</div><div class="tl-title">Corte de pelo</div><div class="tl-desc">Agendado con Vet. Ana Ríos.</div></div>
+          <div class="tl-item"><div class="tl-date">02 ago 2026 · Realizada</div><div class="tl-title">Baño</div><div class="tl-desc">Atendido sin novedades. Piel sensible detectada.</div></div>
+          <div class="tl-item"><div class="tl-date">14 jun 2026 · Realizada</div><div class="tl-title">Limpieza de oídos</div><div class="tl-desc">Se recomendó limpieza mensual preventiva.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 8. AGENDAR CITA ============ -->
+<section class="screen" id="agendar-cita">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Menú</div>
+      <a class="side-link" href="#" data-goto="dashboard-cliente"><span class="ic">🏠</span>Inicio</a>
+      <a class="side-link" href="#" data-goto="mascotas"><span class="ic">🐾</span>Mis mascotas</a>
+      <a class="side-link active" href="#" data-goto="agendar-cita"><span class="ic">🗓️</span>Agendar cita</a>
+      <a class="side-link" href="#" data-goto="mis-citas"><span class="ic">📋</span>Mis citas</a>
+      <div class="sidebar-foot"><div class="avatar">LG</div><div><div class="side-user-name">Laura Gómez</div><div class="side-user-role">Cliente</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Agendar cita</h1><div class="sub">Sigue los pasos para reservar la atención de tu mascota.</div></div></div>
+
+      <div class="steps-bar">
+        <div class="step-item done"><div class="step-circle">✓</div><div class="step-label">Mascota</div></div>
+        <div class="step-line"></div>
+        <div class="step-item done"><div class="step-circle">✓</div><div class="step-label">Servicio</div></div>
+        <div class="step-line"></div>
+        <div class="step-item current"><div class="step-circle">3</div><div class="step-label">Fecha y hora</div></div>
+        <div class="step-line"></div>
+        <div class="step-item"><div class="step-circle">4</div><div class="step-label">Confirmar</div></div>
+      </div>
+
+      <div class="panel" style="max-width:640px;">
+        <div class="panel-head"><h3>Elige la mascota</h3></div>
+        <div class="pick-grid">
+          <div class="pick-card selected"><div class="ic">🐕</div><div class="name">Rocky</div><div class="price">Labrador</div></div>
+          <div class="pick-card"><div class="ic">🐈</div><div class="name">Mishi</div><div class="price">Gato criollo</div></div>
+        </div>
+        <div class="panel-head"><h3>Elige el servicio</h3></div>
+        <div class="pick-grid">
+          <div class="pick-card"><div class="ic">🛁</div><div class="name">Baño</div><div class="price">$25.000</div></div>
+          <div class="pick-card selected"><div class="ic">✂️</div><div class="name">Corte de pelo</div><div class="price">$35.000</div></div>
+          <div class="pick-card"><div class="ic">👂</div><div class="name">Limpieza de oídos</div><div class="price">$15.000</div></div>
+        </div>
+        <div class="panel-head"><h3>Elige fecha</h3></div>
+        <div class="field" style="max-width:220px;"><input type="date" value="2026-09-18"></div>
+        <div class="panel-head" style="margin-top:6px;"><h3>Horas disponibles</h3></div>
+        <div class="time-grid">
+          <div class="time-slot taken">9:00 am</div>
+          <div class="time-slot">10:00 am</div>
+          <div class="time-slot selected">11:00 am</div>
+          <div class="time-slot">2:00 pm</div>
+          <div class="time-slot">3:00 pm</div>
+          <div class="time-slot taken">4:00 pm</div>
+        </div>
+        <div class="summary-box">
+          <div class="summary-row"><span>Rocky · Corte de pelo</span><span>18 sep, 11:00 am</span></div>
+          <div class="summary-row total"><span>Total estimado</span><span>$35.000</span></div>
+        </div>
+        <div class="form-actions">
+          <a href="#" data-goto="mis-citas" class="btn btn-primary">Confirmar cita</a>
+          <a href="#" data-goto="mascotas" class="btn btn-ghost">Cancelar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 9. MIS CITAS ============ -->
+<section class="screen" id="mis-citas">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Menú</div>
+      <a class="side-link" href="#" data-goto="dashboard-cliente"><span class="ic">🏠</span>Inicio</a>
+      <a class="side-link" href="#" data-goto="mascotas"><span class="ic">🐾</span>Mis mascotas</a>
+      <a class="side-link" href="#" data-goto="agendar-cita"><span class="ic">🗓️</span>Agendar cita</a>
+      <a class="side-link active" href="#" data-goto="mis-citas"><span class="ic">📋</span>Mis citas</a>
+      <div class="sidebar-foot"><div class="avatar">LG</div><div><div class="side-user-name">Laura Gómez</div><div class="side-user-role">Cliente</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar">
+        <div><h1>Mis citas</h1><div class="sub">Consulta el estado de tus citas o cancélalas si es necesario.</div></div>
+        <a href="#" data-goto="agendar-cita" class="btn btn-primary btn-sm">+ Nueva cita</a>
+      </div>
+      <div class="panel">
+        <div class="table-toolbar">
+          <div class="filter-pills">
+            <span class="filter-pill active">Todas</span>
+            <span class="filter-pill">Pendientes</span>
+            <span class="filter-pill">Confirmadas</span>
+            <span class="filter-pill">Realizadas</span>
+            <span class="filter-pill">Canceladas</span>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Mascota</th><th>Servicio</th><th>Fecha</th><th>Hora</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Rocky</td><td>Corte de pelo</td><td>18 sep 2026</td><td>11:00 am</td><td><span class="chip chip-confirmed">Confirmada</span></td><td><button class="btn btn-ghost btn-sm">Cancelar</button></td></tr>
+            <tr><td>Mishi</td><td>Baño</td><td>22 sep 2026</td><td>3:30 pm</td><td><span class="chip chip-pending">Pendiente</span></td><td><button class="btn btn-ghost btn-sm">Cancelar</button></td></tr>
+            <tr><td>Rocky</td><td>Baño</td><td>02 ago 2026</td><td>10:00 am</td><td><span class="chip chip-done">Realizada</span></td><td><button class="icon-btn">⋯</button></td></tr>
+            <tr><td>Mishi</td><td>Limpieza de oídos</td><td>28 jul 2026</td><td>9:00 am</td><td><span class="chip chip-cancelled">Cancelada</span></td><td><button class="icon-btn">⋯</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10. PANEL ADMINISTRATIVO ============ -->
+<section class="screen" id="dashboard-admin">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Panel</div>
+      <a class="side-link active" href="#" data-goto="dashboard-admin"><span class="ic">🏠</span>Resumen</a>
+      <a class="side-link" href="#" data-goto="gestion-citas"><span class="ic">🗓️</span>Citas</a>
+      <a class="side-link" href="#" data-goto="gestion-clientes"><span class="ic">👥</span>Clientes</a>
+      <a class="side-link" href="#" data-goto="gestion-servicios"><span class="ic">🛁</span>Servicios</a>
+      <div class="side-section-label">Sistema</div>
+      <a class="side-link" href="#" data-goto="gestion-usuarios"><span class="ic">🔐</span>Usuarios y roles</a>
+      <div class="sidebar-foot"><div class="avatar">CP</div><div><div class="side-user-name">Carlos Peña</div><div class="side-user-role">Administrador</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar">
+        <div><h1>Panel administrativo</h1><div class="sub">Visión general de la operación de hoy.</div></div>
+        <input class="search-input" placeholder="Buscar cliente, mascota o cita...">
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-label">Citas de hoy</div><div class="kpi-value">12</div><div class="kpi-delta">+3 vs. ayer</div></div>
+        <div class="kpi-card"><div class="kpi-label">Citas pendientes</div><div class="kpi-value">5</div></div>
+        <div class="kpi-card"><div class="kpi-label">Clientes activos</div><div class="kpi-value">184</div><div class="kpi-delta">+6 este mes</div></div>
+        <div class="kpi-card"><div class="kpi-label">Cancelaciones (mes)</div><div class="kpi-value">7</div><div class="kpi-delta down">↑ vs. mes anterior</div></div>
+      </div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h3>Agenda de hoy</h3><a class="see-all" href="#" data-goto="gestion-citas">Ver todas</a></div>
+          <div class="appt-row"><div class="appt-time">9:00</div><div class="appt-info"><div class="name">Rocky — Baño</div><div class="meta">Cliente: Laura Gómez</div></div><span class="chip chip-confirmed">Confirmada</span></div>
+          <div class="appt-row"><div class="appt-time">10:30</div><div class="appt-info"><div class="name">Toby — Corte de pelo</div><div class="meta">Cliente: Andrés Ruiz</div></div><span class="chip chip-pending">Pendiente</span></div>
+          <div class="appt-row"><div class="appt-time">1:00</div><div class="appt-info"><div class="name">Nina — Limpieza de oídos</div><div class="meta">Cliente: Marcela Ospina</div></div><span class="chip chip-confirmed">Confirmada</span></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Servicios más solicitados</h3></div>
+          <div class="appt-row"><div class="appt-info"><div class="name">Baño</div></div><b>42%</b></div>
+          <div class="appt-row"><div class="appt-info"><div class="name">Corte de pelo</div></div><b>38%</b></div>
+          <div class="appt-row"><div class="appt-info"><div class="name">Limpieza de oídos</div></div><b>20%</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11. GESTIÓN DE CITAS ============ -->
+<section class="screen" id="gestion-citas">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Panel</div>
+      <a class="side-link" href="#" data-goto="dashboard-admin"><span class="ic">🏠</span>Resumen</a>
+      <a class="side-link active" href="#" data-goto="gestion-citas"><span class="ic">🗓️</span>Citas</a>
+      <a class="side-link" href="#" data-goto="gestion-clientes"><span class="ic">👥</span>Clientes</a>
+      <a class="side-link" href="#" data-goto="gestion-servicios"><span class="ic">🛁</span>Servicios</a>
+      <div class="side-section-label">Sistema</div>
+      <a class="side-link" href="#" data-goto="gestion-usuarios"><span class="ic">🔐</span>Usuarios y roles</a>
+      <div class="sidebar-foot"><div class="avatar">CP</div><div><div class="side-user-name">Carlos Peña</div><div class="side-user-role">Administrador</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Gestión de citas</h1><div class="sub">Consulta y organiza la agenda de la clínica.</div></div>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-ghost btn-sm">📅 Vista calendario</button>
+          <button class="btn btn-primary btn-sm">+ Nueva cita</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head"><h3>Semana del 15 al 21 de septiembre</h3></div>
+        <div class="cal-grid">
+          <div class="cal-day-head">Lun</div><div class="cal-day-head">Mar</div><div class="cal-day-head">Mié</div><div class="cal-day-head">Jue</div><div class="cal-day-head">Vie</div><div class="cal-day-head">Sáb</div><div class="cal-day-head">Dom</div>
+          <div class="cal-cell">15<br><span class="cal-dot">3 citas</span></div>
+          <div class="cal-cell">16<br><span class="cal-dot">5 citas</span></div>
+          <div class="cal-cell today">17<br><span class="cal-dot">4 citas</span></div>
+          <div class="cal-cell">18<br><span class="cal-dot honey">2 citas</span></div>
+          <div class="cal-cell">19<br><span class="cal-dot">6 citas</span></div>
+          <div class="cal-cell">20<br><span class="cal-dot honey">1 cita</span></div>
+          <div class="cal-cell">21</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="table-toolbar">
+          <div class="filter-pills">
+            <span class="filter-pill active">Todas</span>
+            <span class="filter-pill">Pendientes</span>
+            <span class="filter-pill">Confirmadas</span>
+            <span class="filter-pill">Realizadas</span>
+            <span class="filter-pill">Canceladas</span>
+          </div>
+          <input class="search-input" placeholder="Buscar por cliente o mascota...">
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Cliente</th><th>Mascota</th><th>Servicio</th><th>Fecha</th><th>Hora</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Laura Gómez</td><td>Rocky</td><td>Baño</td><td>17 sep</td><td>9:00 am</td><td><span class="chip chip-confirmed">Confirmada</span></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td>Andrés Ruiz</td><td>Toby</td><td>Corte de pelo</td><td>17 sep</td><td>10:30 am</td><td><span class="chip chip-pending">Pendiente</span></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td>Marcela Ospina</td><td>Nina</td><td>Limpieza de oídos</td><td>18 sep</td><td>1:00 pm</td><td><span class="chip chip-confirmed">Confirmada</span></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td>Julián Torres</td><td>Max</td><td>Baño</td><td>16 sep</td><td>4:00 pm</td><td><span class="chip chip-cancelled">Cancelada</span></td><td><button class="icon-btn">✎</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 12. GESTIÓN DE CLIENTES ============ -->
+<section class="screen" id="gestion-clientes">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Panel</div>
+      <a class="side-link" href="#" data-goto="dashboard-admin"><span class="ic">🏠</span>Resumen</a>
+      <a class="side-link" href="#" data-goto="gestion-citas"><span class="ic">🗓️</span>Citas</a>
+      <a class="side-link active" href="#" data-goto="gestion-clientes"><span class="ic">👥</span>Clientes</a>
+      <a class="side-link" href="#" data-goto="gestion-servicios"><span class="ic">🛁</span>Servicios</a>
+      <div class="side-section-label">Sistema</div>
+      <a class="side-link" href="#" data-goto="gestion-usuarios"><span class="ic">🔐</span>Usuarios y roles</a>
+      <div class="sidebar-foot"><div class="avatar">CP</div><div><div class="side-user-name">Carlos Peña</div><div class="side-user-role">Administrador</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Gestión de clientes</h1><div class="sub">Consulta la información de los propietarios registrados.</div></div></div>
+      <div class="panel">
+        <div class="table-toolbar">
+          <input class="search-input" placeholder="Buscar por nombre, cédula o teléfono...">
+          <button class="btn btn-primary btn-sm">+ Registrar cliente</button>
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Cliente</th><th>Cédula</th><th>Teléfono</th><th>Mascotas</th><th>Última cita</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><div class="row-name"><div class="row-avatar">LG</div>Laura Gómez</div></td><td>1.234.567</td><td>300 000 0000</td><td>2</td><td>17 sep 2026</td><td><button class="icon-btn">→</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">AR</div>Andrés Ruiz</div></td><td>1.098.765</td><td>301 111 1111</td><td>1</td><td>17 sep 2026</td><td><button class="icon-btn">→</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">MO</div>Marcela Ospina</div></td><td>1.076.543</td><td>302 222 2222</td><td>3</td><td>18 sep 2026</td><td><button class="icon-btn">→</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">JT</div>Julián Torres</div></td><td>1.055.432</td><td>303 333 3333</td><td>1</td><td>16 sep 2026</td><td><button class="icon-btn">→</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 13. GESTIÓN DE SERVICIOS ============ -->
+<section class="screen" id="gestion-servicios">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Panel</div>
+      <a class="side-link" href="#" data-goto="dashboard-admin"><span class="ic">🏠</span>Resumen</a>
+      <a class="side-link" href="#" data-goto="gestion-citas"><span class="ic">🗓️</span>Citas</a>
+      <a class="side-link" href="#" data-goto="gestion-clientes"><span class="ic">👥</span>Clientes</a>
+      <a class="side-link active" href="#" data-goto="gestion-servicios"><span class="ic">🛁</span>Servicios</a>
+      <div class="side-section-label">Sistema</div>
+      <a class="side-link" href="#" data-goto="gestion-usuarios"><span class="ic">🔐</span>Usuarios y roles</a>
+      <div class="sidebar-foot"><div class="avatar">CP</div><div><div class="side-user-name">Carlos Peña</div><div class="side-user-role">Administrador</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Gestión de servicios</h1><div class="sub">Administra los servicios que ofrece Best Style.</div></div>
+        <button class="btn btn-primary btn-sm">+ Nuevo servicio</button>
+      </div>
+      <div class="panel">
+        <table class="data-table">
+          <thead><tr><th>Servicio</th><th>Duración estimada</th><th>Precio</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><div class="row-name"><div class="row-avatar">🛁</div>Baño</div></td><td>45 min</td><td>$25.000</td><td><div class="toggle"></div></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">✂️</div>Corte de pelo</div></td><td>60 min</td><td>$35.000</td><td><div class="toggle"></div></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">👂</div>Limpieza de oídos</div></td><td>20 min</td><td>$15.000</td><td><div class="toggle off"></div></td><td><button class="icon-btn">✎</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 14. GESTIÓN DE USUARIOS Y ROLES ============ -->
+<section class="screen" id="gestion-usuarios">
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark" style="background:var(--pine-pale);color:var(--pine-dark);">B</div><div class="brand-name">Best Style</div></div>
+      <div class="side-section-label">Panel</div>
+      <a class="side-link" href="#" data-goto="dashboard-admin"><span class="ic">🏠</span>Resumen</a>
+      <a class="side-link" href="#" data-goto="gestion-citas"><span class="ic">🗓️</span>Citas</a>
+      <a class="side-link" href="#" data-goto="gestion-clientes"><span class="ic">👥</span>Clientes</a>
+      <a class="side-link" href="#" data-goto="gestion-servicios"><span class="ic">🛁</span>Servicios</a>
+      <div class="side-section-label">Sistema</div>
+      <a class="side-link active" href="#" data-goto="gestion-usuarios"><span class="ic">🔐</span>Usuarios y roles</a>
+      <div class="sidebar-foot"><div class="avatar">CP</div><div><div class="side-user-name">Carlos Peña</div><div class="side-user-role">Administrador</div></div></div>
+    </aside>
+    <div class="main-area">
+      <div class="topbar"><div><h1>Usuarios y roles</h1><div class="sub">Gestiona quién puede acceder al sistema y con qué permisos.</div></div>
+        <button class="btn btn-primary btn-sm">+ Nuevo usuario</button>
+      </div>
+      <div class="panel">
+        <div class="table-toolbar">
+          <div class="filter-pills">
+            <span class="filter-pill active">Todos</span>
+            <span class="filter-pill">Clientes</span>
+            <span class="filter-pill">Veterinarios</span>
+            <span class="filter-pill">Administradores</span>
+          </div>
+          <input class="search-input" placeholder="Buscar usuario...">
+        </div>
+        <table class="data-table">
+          <thead><tr><th>Usuario</th><th>Correo</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><div class="row-name"><div class="row-avatar">CP</div>Carlos Peña</div></td><td>carlos@beststyle.com</td><td><span class="role-pill role-admin">Administrador</span></td><td><div class="toggle"></div></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">AR</div>Ana Ríos</div></td><td>ana@beststyle.com</td><td><span class="role-pill role-vet">Veterinario</span></td><td><div class="toggle"></div></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">LG</div>Laura Gómez</div></td><td>laura@correo.com</td><td><span class="role-pill role-cliente">Cliente</span></td><td><div class="toggle"></div></td><td><button class="icon-btn">✎</button></td></tr>
+            <tr><td><div class="row-name"><div class="row-avatar">JT</div>Julián Torres</div></td><td>julian@correo.com</td><td><span class="role-pill role-cliente">Cliente</span></td><td><div class="toggle off"></div></td><td><button class="icon-btn">✎</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+function goTo(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('#demo-bar button').forEach(b=>b.classList.remove('active'));
+  const navBtn = document.querySelector('#demo-bar button[data-target="'+id+'"]');
+  if(navBtn) navBtn.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+}
+document.querySelectorAll('#demo-bar button').forEach(b=>{
+  b.addEventListener('click',()=>goTo(b.dataset.target));
+});
+document.querySelectorAll('[data-goto]').forEach(el=>{
+  el.addEventListener('click',(e)=>{e.preventDefault();goTo(el.dataset.goto);});
+});
+</script>
+</body>
+</html>
