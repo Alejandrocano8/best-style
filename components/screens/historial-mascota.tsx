@@ -1,7 +1,10 @@
 import { ClientSidebar } from "@/components/client-sidebar";
 import { GotoLink } from "@/components/nav-context";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
 
-export function HistorialMascota() {
+export function HistorialMascota({ data }: { data: PrototypeData }) {
+  const pet = data.pets[0];
+
   return (
     <section className="screen active" id="historial-mascota">
       <div className="app-shell">
@@ -10,21 +13,21 @@ export function HistorialMascota() {
           <div className="topbar">
             <div>
               <h1>Perfil de mascota</h1>
-              <div className="sub">Información y servicios de Rocky.</div>
+              <div className="sub">Información y servicios de {pet.name}.</div>
             </div>
             <GotoLink to="agendar-cita" className="btn btn-primary btn-sm">
-              Agendar cita para Rocky
+              Agendar cita para {pet.name}
             </GotoLink>
           </div>
           <div className="pet-header">
-            <div className="photo-lg">🐕</div>
+            <div className="photo-lg">{pet.icon}</div>
             <div>
-              <h2>Rocky</h2>
+              <h2>{pet.name}</h2>
               <div className="tags">
-                <span className="tag">Labrador</span>
-                <span className="tag">Macho</span>
-                <span className="tag">3 años</span>
-                <span className="tag">Propietario: Laura Gómez</span>
+                <span className="tag">{pet.breed}</span>
+                <span className="tag">{pet.sex}</span>
+                <span className="tag">{pet.ageYears} años</span>
+                <span className="tag">Propietario: {pet.ownerName}</span>
               </div>
             </div>
           </div>

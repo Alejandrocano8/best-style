@@ -1,7 +1,11 @@
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { GotoLink } from "@/components/nav-context";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
+import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
 
-export function DashboardAdmin() {
+export function DashboardAdmin({ data }: { data: PrototypeData }) {
+  const todayAppointments = data.appointments.slice(0, 3);
+
   return (
     <section className="screen active" id="dashboard-admin">
       <div className="app-shell">
@@ -17,21 +21,25 @@ export function DashboardAdmin() {
           <div className="kpi-grid">
             <div className="kpi-card">
               <div className="kpi-label">Citas de hoy</div>
-              <div className="kpi-value">12</div>
-              <div className="kpi-delta">+3 vs. ayer</div>
+              <div className="kpi-value">{data.adminDashboard.todayAppointments}</div>
+              <div className="kpi-delta">
+                +{data.adminDashboard.appointmentsComparedToYesterday} vs. ayer
+              </div>
             </div>
             <div className="kpi-card">
               <div className="kpi-label">Citas pendientes</div>
-              <div className="kpi-value">5</div>
+              <div className="kpi-value">{data.adminDashboard.pendingAppointments}</div>
             </div>
             <div className="kpi-card">
               <div className="kpi-label">Clientes activos</div>
-              <div className="kpi-value">184</div>
-              <div className="kpi-delta">+6 este mes</div>
+              <div className="kpi-value">{data.adminDashboard.activeClients}</div>
+              <div className="kpi-delta">
+                +{data.adminDashboard.newClientsThisMonth} este mes
+              </div>
             </div>
             <div className="kpi-card">
               <div className="kpi-label">Cancelaciones (mes)</div>
-              <div className="kpi-value">7</div>
+              <div className="kpi-value">{data.adminDashboard.cancellationsThisMonth}</div>
               <div className="kpi-delta down">↑ vs. mes anterior</div>
             </div>
           </div>
@@ -43,53 +51,34 @@ export function DashboardAdmin() {
                   Ver todas
                 </GotoLink>
               </div>
-              <div className="appt-row">
-                <div className="appt-time">9:00</div>
-                <div className="appt-info">
-                  <div className="name">Rocky — Baño</div>
-                  <div className="meta">Cliente: Laura Gómez</div>
-                </div>
-                <span className="chip chip-confirmed">Confirmada</span>
-              </div>
-              <div className="appt-row">
-                <div className="appt-time">10:30</div>
-                <div className="appt-info">
-                  <div className="name">Toby — Corte de pelo</div>
-                  <div className="meta">Cliente: Andrés Ruiz</div>
-                </div>
-                <span className="chip chip-pending">Pendiente</span>
-              </div>
-              <div className="appt-row">
-                <div className="appt-time">1:00</div>
-                <div className="appt-info">
-                  <div className="name">Nina — Limpieza de oídos</div>
-                  <div className="meta">Cliente: Marcela Ospina</div>
-                </div>
-                <span className="chip chip-confirmed">Confirmada</span>
-              </div>
+              {todayAppointments.map((appointment) => {
+                const status = getAppointmentStatusPresentation(appointment.status);
+                return (
+                  <div className="appt-row" key={appointment.id}>
+                    <div className="appt-time">{appointment.time}</div>
+                    <div className="appt-info">
+                      <div className="name">
+                        {appointment.petName} — {appointment.serviceName}
+                      </div>
+                      <div className="meta">Cliente: {appointment.ownerName}</div>
+                    </div>
+                    <span className={`chip ${status.className}`}>{status.label}</span>
+                  </div>
+                );
+              })}
             </div>
             <div className="panel">
               <div className="panel-head">
                 <h3>Servicios más solicitados</h3>
               </div>
-              <div className="appt-row">
-                <div className="appt-info">
-                  <div className="name">Baño</div>
+              {data.services.map((service) => (
+                <div className="appt-row" key={service.id}>
+                  <div className="appt-info">
+                    <div className="name">{service.name}</div>
+                  </div>
+                  <b>{service.requestPercentage}%</b>
                 </div>
-                <b>42%</b>
-              </div>
-              <div className="appt-row">
-                <div className="appt-info">
-                  <div className="name">Corte de pelo</div>
-                </div>
-                <b>38%</b>
-              </div>
-              <div className="appt-row">
-                <div className="appt-info">
-                  <div className="name">Limpieza de oídos</div>
-                </div>
-                <b>20%</b>
-              </div>
+              ))}
             </div>
           </div>
         </div>

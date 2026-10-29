@@ -1,9 +1,10 @@
 "use client";
 
-import { GotoLink, useNav } from "@/components/nav-context";
+import { GotoLink, useAuth, useNav } from "@/components/nav-context";
 
 export function AdminSidebar() {
   const { active } = useNav();
+  const { user, signOut } = useAuth();
 
   const link = (id: Parameters<typeof GotoLink>[0]["to"], icon: string, label: string) => (
     <GotoLink to={id} className={`side-link${active === id ? " active" : ""}`}>
@@ -28,11 +29,14 @@ export function AdminSidebar() {
       <div className="side-section-label">Sistema</div>
       {link("gestion-usuarios", "🔐", "Usuarios y roles")}
       <div className="sidebar-foot">
-        <div className="avatar">CP</div>
-        <div>
-          <div className="side-user-name">Carlos Peña</div>
-          <div className="side-user-role">Administrador</div>
+        <div className="avatar">{user?.initials ?? "BS"}</div>
+        <div className="side-user-meta">
+          <div className="side-user-name">{user?.name ?? "Invitado"}</div>
+          <div className="side-user-role">{user?.role ?? "Administrador"}</div>
         </div>
+        <button type="button" className="side-logout" onClick={() => void signOut()}>
+          Salir
+        </button>
       </div>
     </aside>
   );

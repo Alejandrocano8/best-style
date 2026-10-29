@@ -1,6 +1,7 @@
 import { AdminSidebar } from "@/components/admin-sidebar";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
 
-export function GestionClientes() {
+export function GestionClientes({ data }: { data: PrototypeData }) {
   return (
     <section className="screen active" id="gestion-clientes">
       <div className="app-shell">
@@ -29,66 +30,23 @@ export function GestionClientes() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">LG</div>
-                      Laura Gómez
-                    </div>
-                  </td>
-                  <td>1.234.567</td>
-                  <td>300 000 0000</td>
-                  <td>2</td>
-                  <td>17 sep 2026</td>
-                  <td>
-                    <button className="icon-btn">→</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">AR</div>
-                      Andrés Ruiz
-                    </div>
-                  </td>
-                  <td>1.098.765</td>
-                  <td>301 111 1111</td>
-                  <td>1</td>
-                  <td>17 sep 2026</td>
-                  <td>
-                    <button className="icon-btn">→</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">MO</div>
-                      Marcela Ospina
-                    </div>
-                  </td>
-                  <td>1.076.543</td>
-                  <td>302 222 2222</td>
-                  <td>3</td>
-                  <td>18 sep 2026</td>
-                  <td>
-                    <button className="icon-btn">→</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">JT</div>
-                      Julián Torres
-                    </div>
-                  </td>
-                  <td>1.055.432</td>
-                  <td>303 333 3333</td>
-                  <td>1</td>
-                  <td>16 sep 2026</td>
-                  <td>
-                    <button className="icon-btn">→</button>
-                  </td>
-                </tr>
+                {data.clients.map((client) => (
+                  <tr key={client.id}>
+                    <td>
+                      <div className="row-name">
+                        <div className="row-avatar">{client.initials}</div>
+                        {client.name}
+                      </div>
+                    </td>
+                    <td>{client.nationalId}</td>
+                    <td>{client.phone}</td>
+                    <td>{client.petCount}</td>
+                    <td>{client.lastAppointment}</td>
+                    <td>
+                      <button className="icon-btn">→</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

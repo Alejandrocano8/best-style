@@ -1,6 +1,7 @@
 import { AdminSidebar } from "@/components/admin-sidebar";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
 
-export function GestionServicios() {
+export function GestionServicios({ data }: { data: PrototypeData }) {
   return (
     <section className="screen active" id="gestion-servicios">
       <div className="app-shell">
@@ -25,54 +26,24 @@ export function GestionServicios() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">🛁</div>
-                      Baño
-                    </div>
-                  </td>
-                  <td>45 min</td>
-                  <td>$25.000</td>
-                  <td>
-                    <div className="toggle"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">✂️</div>
-                      Corte de pelo
-                    </div>
-                  </td>
-                  <td>60 min</td>
-                  <td>$35.000</td>
-                  <td>
-                    <div className="toggle"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">👂</div>
-                      Limpieza de oídos
-                    </div>
-                  </td>
-                  <td>20 min</td>
-                  <td>$15.000</td>
-                  <td>
-                    <div className="toggle off"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
+                {data.services.map((service) => (
+                  <tr key={service.id}>
+                    <td>
+                      <div className="row-name">
+                        <div className="row-avatar">{service.icon}</div>
+                        {service.name}
+                      </div>
+                    </td>
+                    <td>{service.durationMinutes} min</td>
+                    <td>${service.price.toLocaleString("es-CO")}</td>
+                    <td>
+                      <div className={`toggle${service.isActive ? "" : " off"}`}></div>
+                    </td>
+                    <td>
+                      <button className="icon-btn">✎</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
