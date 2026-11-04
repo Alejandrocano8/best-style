@@ -1,6 +1,10 @@
 import { AdminSidebar } from "@/components/admin-sidebar";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
+import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
 
-export function GestionCitas() {
+export function GestionCitas({ data }: { data: PrototypeData }) {
+  const appointments = data.appointments.slice(0, 4);
+
   return (
     <section className="screen active" id="gestion-citas">
       <div className="app-shell">
@@ -87,58 +91,24 @@ export function GestionCitas() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>Laura Gómez</td>
-                  <td>Rocky</td>
-                  <td>Baño</td>
-                  <td>17 sep</td>
-                  <td>9:00 am</td>
-                  <td>
-                    <span className="chip chip-confirmed">Confirmada</span>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Andrés Ruiz</td>
-                  <td>Toby</td>
-                  <td>Corte de pelo</td>
-                  <td>17 sep</td>
-                  <td>10:30 am</td>
-                  <td>
-                    <span className="chip chip-pending">Pendiente</span>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Marcela Ospina</td>
-                  <td>Nina</td>
-                  <td>Limpieza de oídos</td>
-                  <td>18 sep</td>
-                  <td>1:00 pm</td>
-                  <td>
-                    <span className="chip chip-confirmed">Confirmada</span>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Julián Torres</td>
-                  <td>Max</td>
-                  <td>Baño</td>
-                  <td>16 sep</td>
-                  <td>4:00 pm</td>
-                  <td>
-                    <span className="chip chip-cancelled">Cancelada</span>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
+                {appointments.map((appointment) => {
+                  const status = getAppointmentStatusPresentation(appointment.status);
+                  return (
+                    <tr key={appointment.id}>
+                      <td>{appointment.ownerName}</td>
+                      <td>{appointment.petName}</td>
+                      <td>{appointment.serviceName}</td>
+                      <td>{appointment.date.split(" ").slice(0, 2).join(" ")}</td>
+                      <td>{appointment.time}</td>
+                      <td>
+                        <span className={`chip ${status.className}`}>{status.label}</span>
+                      </td>
+                      <td>
+                        <button className="icon-btn">✎</button>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -1,7 +1,8 @@
 import { ClientSidebar } from "@/components/client-sidebar";
 import { GotoLink } from "@/components/nav-context";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
 
-export function AgendarCita() {
+export function AgendarCita({ data }: { data: PrototypeData }) {
   return (
     <section className="screen active" id="agendar-cita">
       <div className="app-shell">
@@ -41,36 +42,28 @@ export function AgendarCita() {
               <h3>Elige la mascota</h3>
             </div>
             <div className="pick-grid">
-              <div className="pick-card selected">
-                <div className="ic">🐕</div>
-                <div className="name">Rocky</div>
-                <div className="price">Labrador</div>
-              </div>
-              <div className="pick-card">
-                <div className="ic">🐈</div>
-                <div className="name">Mishi</div>
-                <div className="price">Gato criollo</div>
-              </div>
+              {data.pets.map((pet, index) => (
+                <div className={`pick-card${index === 0 ? " selected" : ""}`} key={pet.id}>
+                  <div className="ic">{pet.icon}</div>
+                  <div className="name">{pet.name}</div>
+                  <div className="price">{pet.breed}</div>
+                </div>
+              ))}
             </div>
             <div className="panel-head">
               <h3>Elige el servicio</h3>
             </div>
             <div className="pick-grid">
-              <div className="pick-card">
-                <div className="ic">🛁</div>
-                <div className="name">Baño</div>
-                <div className="price">$25.000</div>
-              </div>
-              <div className="pick-card selected">
-                <div className="ic">✂️</div>
-                <div className="name">Corte de pelo</div>
-                <div className="price">$35.000</div>
-              </div>
-              <div className="pick-card">
-                <div className="ic">👂</div>
-                <div className="name">Limpieza de oídos</div>
-                <div className="price">$15.000</div>
-              </div>
+              {data.services.map((service) => (
+                <div
+                  className={`pick-card${service.id === "service-2" ? " selected" : ""}`}
+                  key={service.id}
+                >
+                  <div className="ic">{service.icon}</div>
+                  <div className="name">{service.name}</div>
+                  <div className="price">${service.price.toLocaleString("es-CO")}</div>
+                </div>
+              ))}
             </div>
             <div className="panel-head">
               <h3>Elige fecha</h3>
@@ -91,7 +84,9 @@ export function AgendarCita() {
             </div>
             <div className="summary-box">
               <div className="summary-row">
-                <span>Rocky · Corte de pelo</span>
+                <span>
+                  {data.pets[0].name} · Corte de pelo
+                </span>
                 <span>18 sep, 11:00 am</span>
               </div>
               <div className="summary-row total">

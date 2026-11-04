@@ -1,6 +1,13 @@
 import { AdminSidebar } from "@/components/admin-sidebar";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
 
-export function GestionUsuarios() {
+const ROLE_CLASS = {
+  Administrador: "role-admin",
+  Veterinario: "role-vet",
+  Cliente: "role-cliente",
+} as const;
+
+export function GestionUsuarios({ data }: { data: PrototypeData }) {
   return (
     <section className="screen active" id="gestion-usuarios">
       <div className="app-shell">
@@ -34,78 +41,26 @@ export function GestionUsuarios() {
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">CP</div>
-                      Carlos Peña
-                    </div>
-                  </td>
-                  <td>carlos@beststyle.com</td>
-                  <td>
-                    <span className="role-pill role-admin">Administrador</span>
-                  </td>
-                  <td>
-                    <div className="toggle"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">AR</div>
-                      Ana Ríos
-                    </div>
-                  </td>
-                  <td>ana@beststyle.com</td>
-                  <td>
-                    <span className="role-pill role-vet">Veterinario</span>
-                  </td>
-                  <td>
-                    <div className="toggle"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">LG</div>
-                      Laura Gómez
-                    </div>
-                  </td>
-                  <td>laura@correo.com</td>
-                  <td>
-                    <span className="role-pill role-cliente">Cliente</span>
-                  </td>
-                  <td>
-                    <div className="toggle"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <div className="row-name">
-                      <div className="row-avatar">JT</div>
-                      Julián Torres
-                    </div>
-                  </td>
-                  <td>julian@correo.com</td>
-                  <td>
-                    <span className="role-pill role-cliente">Cliente</span>
-                  </td>
-                  <td>
-                    <div className="toggle off"></div>
-                  </td>
-                  <td>
-                    <button className="icon-btn">✎</button>
-                  </td>
-                </tr>
+                {data.users.map((user) => (
+                  <tr key={user.id}>
+                    <td>
+                      <div className="row-name">
+                        <div className="row-avatar">{user.initials}</div>
+                        {user.name}
+                      </div>
+                    </td>
+                    <td>{user.email}</td>
+                    <td>
+                      <span className={`role-pill ${ROLE_CLASS[user.role]}`}>{user.role}</span>
+                    </td>
+                    <td>
+                      <div className={`toggle${user.isActive ? "" : " off"}`}></div>
+                    </td>
+                    <td>
+                      <button className="icon-btn">✎</button>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

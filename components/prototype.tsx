@@ -15,71 +15,42 @@ import { GestionCitas } from "@/components/screens/gestion-citas";
 import { GestionClientes } from "@/components/screens/gestion-clientes";
 import { GestionServicios } from "@/components/screens/gestion-servicios";
 import { GestionUsuarios } from "@/components/screens/gestion-usuarios";
+import type { AuthenticatedUser } from "@/domain/entities/auth-user";
+import type { PrototypeData } from "@/domain/entities/prototype-data";
 
-const SCREEN_LIST: { id: ScreenId; label: string }[] = [
-  { id: "landing", label: "1. Landing" },
-  { id: "login", label: "2. Login" },
-  { id: "registro-cliente", label: "3. Registro cliente" },
-  { id: "dashboard-cliente", label: "4. Dashboard cliente" },
-  { id: "mascotas", label: "5. Mis mascotas" },
-  { id: "registro-mascota", label: "6. Registro mascota" },
-  { id: "historial-mascota", label: "7. Historial mascota" },
-  { id: "agendar-cita", label: "8. Agendar cita" },
-  { id: "mis-citas", label: "9. Mis citas" },
-  { id: "dashboard-admin", label: "10. Panel admin" },
-  { id: "gestion-citas", label: "11. Gestión citas" },
-  { id: "gestion-clientes", label: "12. Gestión clientes" },
-  { id: "gestion-servicios", label: "13. Gestión servicios" },
-  { id: "gestion-usuarios", label: "14. Usuarios y roles" },
-];
-
-const SCREENS: Record<ScreenId, () => React.ReactElement> = {
-  landing: Landing,
-  login: Login,
-  "registro-cliente": RegistroCliente,
-  "dashboard-cliente": DashboardCliente,
-  mascotas: Mascotas,
-  "registro-mascota": RegistroMascota,
-  "historial-mascota": HistorialMascota,
-  "agendar-cita": AgendarCita,
-  "mis-citas": MisCitas,
-  "dashboard-admin": DashboardAdmin,
-  "gestion-citas": GestionCitas,
-  "gestion-clientes": GestionClientes,
-  "gestion-servicios": GestionServicios,
-  "gestion-usuarios": GestionUsuarios,
+const SCREENS: Record<ScreenId, React.ComponentType<{ data: PrototypeData }>> = {
+  landing: () => <Landing />,
+  login: () => <Login />,
+  "registro-cliente": () => <RegistroCliente />,
+  "dashboard-cliente": ({ data }) => <DashboardCliente data={data} />,
+  mascotas: ({ data }) => <Mascotas data={data} />,
+  "registro-mascota": () => <RegistroMascota />,
+  "historial-mascota": ({ data }) => <HistorialMascota data={data} />,
+  "agendar-cita": ({ data }) => <AgendarCita data={data} />,
+  "mis-citas": ({ data }) => <MisCitas data={data} />,
+  "dashboard-admin": ({ data }) => <DashboardAdmin data={data} />,
+  "gestion-citas": ({ data }) => <GestionCitas data={data} />,
+  "gestion-clientes": ({ data }) => <GestionClientes data={data} />,
+  "gestion-servicios": ({ data }) => <GestionServicios data={data} />,
+  "gestion-usuarios": ({ data }) => <GestionUsuarios data={data} />,
 };
 
-function DemoBar() {
-  const { active, goTo } = useNav();
-  return (
-    <div id="demo-bar">
-      <span className="demo-label">Prototipo · ir a pantalla</span>
-      {SCREEN_LIST.map((s) => (
-        <button
-          key={s.id}
-          data-target={s.id}
-          className={active === s.id ? "active" : ""}
-          onClick={() => goTo(s.id)}
-        >
-          {s.label}
-        </button>
-      ))}
-    </div>
-  );
-}
-
-function PrototypeScreens() {
+function PrototypeScreens({ data }: { data: PrototypeData }) {
   const { active } = useNav();
   const Screen = SCREENS[active];
-  return <Screen />;
+  return <Screen data={data} />;
 }
 
-export function Prototype() {
+export function Prototype({
+  data,
+  initialUser,
+}: {
+  data: PrototypeData;
+  initialUser: AuthenticatedUser | null;
+}) {
   return (
-    <NavProvider>
-      <DemoBar />
-      <PrototypeScreens />
+    <NavProvider initialUser={initialUser}>
+      <PrototypeScreens data={data} />
     </NavProvider>
   );
 }
