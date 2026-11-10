@@ -62,6 +62,11 @@ export async function getSessionUser(): Promise<AuthenticatedUser | null> {
   return token ? decodeSession(token) : null;
 }
 
+export async function getAdminUser(): Promise<AuthenticatedUser | null> {
+  const user = await getSessionUser();
+  return user?.role === "Administrador" ? user : null;
+}
+
 export async function setSessionCookie(user: AuthenticatedUser): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.set(SESSION_COOKIE, encodeSession(user), {
