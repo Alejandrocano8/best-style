@@ -50,6 +50,7 @@ type PetRow = {
   breed: string | null;
   sex: string | null;
   age_years: number | null;
+  owner_id: string | null;
   owner_name: string | null;
   icon: string | null;
 };
@@ -99,7 +100,7 @@ export class PostgresPrototypeRepository implements PrototypeRepository {
            FROM clients ORDER BY created_at`,
         ),
         pool.query<PetRow>(
-          "SELECT id, name, species, breed, sex, age_years, owner_name, icon FROM pets ORDER BY created_at",
+          "SELECT id, name, species, breed, sex, age_years, owner_id, owner_name, icon FROM pets ORDER BY created_at",
         ),
         pool.query<ServiceRow>(
           "SELECT id, name, icon, duration_minutes, price, is_active, request_percentage FROM services ORDER BY created_at",
@@ -151,6 +152,7 @@ export class PostgresPrototypeRepository implements PrototypeRepository {
       breed: row.breed ?? "",
       sex: row.sex ?? "",
       ageYears: row.age_years ?? 0,
+      ownerId: row.owner_id ?? "",
       ownerName: row.owner_name ?? "",
       icon: row.icon ?? "",
     }));
