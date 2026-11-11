@@ -4,3 +4,6 @@ node_modules/
 out/
 .env
 .env.local
+.env.test
+.env.test.local
+.env.*.local

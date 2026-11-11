@@ -4,9 +4,15 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:testing": "node --env-file=.env.test.local node_modules/next/dist/bin/next dev",
     "build": "next build",
     "start": "next start",
-    "db:migrate": "node --env-file=.env.local scripts/apply-migration.mjs"
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "node --env-file=.env.local scripts/apply-migration.mjs --target production",
+    "db:migrate:testing": "node --env-file=.env.test.local scripts/apply-migration.mjs --target testing",
+    "db:status:testing": "node --env-file=.env.test.local scripts/apply-migration.mjs --target testing --status",
+    "db:seed:testing": "node --env-file=.env.test.local scripts/apply-migration.mjs --target testing --seed supabase/seed.testing.sql",
+    "db:migrate:production": "node --env-file=.env.local scripts/apply-migration.mjs --target production --allow-production"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.48.1",
