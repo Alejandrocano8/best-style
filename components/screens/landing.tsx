@@ -1,4 +1,10 @@
 import { GotoLink } from "@/components/nav-context";
+import {
+  BathIcon,
+  EarCareIcon,
+  HeroPetIllustration,
+  ScissorsIcon,
+} from "@/components/icons";
 
 export function Landing() {
   return (
@@ -47,7 +53,7 @@ export function Landing() {
           </div>
         </div>
         <div className="lp-photo">
-          🐾
+          <HeroPetIllustration />
           <div className="lp-photo-card">
             <div className="name">Cita confirmada</div>
             <div className="meta">Rocky · Corte de pelo · Vie 18, 11:00 am</div>
@@ -61,7 +67,9 @@ export function Landing() {
           <p>Tratamientos pensados para la higiene, salud y bienestar de tu mascota.</p>
         </div>
         <div className="lp-service-row">
-          <div className="lp-service-icon">🛁</div>
+          <div className="lp-service-icon">
+            <BathIcon size={26} />
+          </div>
           <div>
             <h3>Baño</h3>
             <p>Baño con productos hipoalergénicos, secado y cepillado según el tipo de pelaje.</p>
@@ -71,7 +79,9 @@ export function Landing() {
           </div>
         </div>
         <div className="lp-service-row">
-          <div className="lp-service-icon">✂️</div>
+          <div className="lp-service-icon">
+            <ScissorsIcon size={26} />
+          </div>
           <div>
             <h3>Corte de pelo</h3>
             <p>Corte a tijera o máquina, adaptado a la raza y preferencia del propietario.</p>
@@ -81,7 +91,9 @@ export function Landing() {
           </div>
         </div>
         <div className="lp-service-row">
-          <div className="lp-service-icon">👂</div>
+          <div className="lp-service-icon">
+            <EarCareIcon size={26} />
+          </div>
           <div>
             <h3>Limpieza de oídos</h3>
             <p>Limpieza preventiva para evitar infecciones y molestias auditivas.</p>

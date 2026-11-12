@@ -4,6 +4,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AdminModal } from "@/components/admin-modal";
 import { AdminSidebar } from "@/components/admin-sidebar";
+import { PencilIcon, TrashIcon } from "@/components/icons";
 import type { User, UserRole } from "@/domain/entities/user";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
 
@@ -316,7 +317,7 @@ export function GestionUsuarios({ data }: { data: PrototypeData }) {
                           aria-label={`Editar ${user.name}`}
                           title="Editar"
                         >
-                          ✎
+                          <PencilIcon size={14} />
                         </button>
                         <button
                           type="button"
@@ -325,7 +326,7 @@ export function GestionUsuarios({ data }: { data: PrototypeData }) {
                           aria-label={`Eliminar ${user.name}`}
                           title="Eliminar"
                         >
-                          ✕
+                          <TrashIcon size={14} />
                         </button>
                       </div>
                     </td>

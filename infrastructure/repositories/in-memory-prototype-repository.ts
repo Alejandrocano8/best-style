@@ -126,7 +126,7 @@ const prototypeData: PrototypeData = {
       ageYears: 3,
       ownerId: "client-1",
       ownerName: "Laura Gómez",
-      icon: "🐕",
+      icon: "dog",
     },
     {
       id: "pet-2",
@@ -137,14 +137,14 @@ const prototypeData: PrototypeData = {
       ageYears: 1,
       ownerId: "client-1",
       ownerName: "Laura Gómez",
-      icon: "🐈",
+      icon: "cat",
     },
   ],
   services: [
     {
       id: "service-1",
       name: "Baño",
-      icon: "🛁",
+      icon: "bath",
       durationMinutes: 45,
       price: 25000,
       isActive: true,
@@ -153,7 +153,7 @@ const prototypeData: PrototypeData = {
     {
       id: "service-2",
       name: "Corte de pelo",
-      icon: "✂️",
+      icon: "scissors",
       durationMinutes: 60,
       price: 35000,
       isActive: true,
@@ -162,7 +162,7 @@ const prototypeData: PrototypeData = {
     {
       id: "service-3",
       name: "Limpieza de oídos",
-      icon: "👂",
+      icon: "ear",
       durationMinutes: 20,
       price: 15000,
       isActive: false,

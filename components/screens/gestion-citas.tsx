@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AdminModal } from "@/components/admin-modal";
 import { AdminSidebar } from "@/components/admin-sidebar";
+import { CalendarIcon, PencilIcon } from "@/components/icons";
 import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
 import type { Appointment, AppointmentStatus } from "@/domain/entities/appointment";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
@@ -451,7 +452,9 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
               <div className="sub">Consulta y organiza la agenda de la clínica.</div>
             </div>
             <div style={{ display: "flex", gap: "10px" }}>
-              <button className="btn btn-ghost btn-sm">📅 Vista calendario</button>
+              <button className="btn btn-ghost btn-sm">
+                <CalendarIcon size={14} /> Vista calendario
+              </button>
               <button
                 type="button"
                 className="btn btn-primary btn-sm"
@@ -541,7 +544,7 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
                           onClick={() => setEditing(appointment)}
                           aria-label="Editar cita"
                         >
-                          ✎
+                          <PencilIcon size={14} />
                         </button>
                       </td>
                     </tr>

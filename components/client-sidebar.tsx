@@ -1,12 +1,19 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { GotoLink, useAuth, useNav } from "@/components/nav-context";
+import {
+  CalendarPlusIcon,
+  ClipboardListIcon,
+  HomeIcon,
+  PawIcon,
+} from "@/components/icons";
 
 export function ClientSidebar() {
   const { active } = useNav();
   const { user, signOut } = useAuth();
 
-  const link = (id: Parameters<typeof GotoLink>[0]["to"], icon: string, label: string) => (
+  const link = (id: Parameters<typeof GotoLink>[0]["to"], icon: ReactNode, label: string) => (
     <GotoLink to={id} className={`side-link${active === id ? " active" : ""}`}>
       <span className="ic">{icon}</span>
       {label}
@@ -22,10 +29,10 @@ export function ClientSidebar() {
         <div className="brand-name">Best Style</div>
       </div>
       <div className="side-section-label">Menú</div>
-      {link("dashboard-cliente", "🏠", "Inicio")}
-      {link("mascotas", "🐾", "Mis mascotas")}
-      {link("agendar-cita", "🗓️", "Agendar cita")}
-      {link("mis-citas", "📋", "Mis citas")}
+      {link("dashboard-cliente", <HomeIcon size={16} />, "Inicio")}
+      {link("mascotas", <PawIcon size={16} />, "Mis mascotas")}
+      {link("agendar-cita", <CalendarPlusIcon size={16} />, "Agendar cita")}
+      {link("mis-citas", <ClipboardListIcon size={16} />, "Mis citas")}
       <div className="sidebar-foot">
         <div className="avatar">{user?.initials ?? "BS"}</div>
         <div className="side-user-meta">

@@ -37,7 +37,7 @@ export class ManageServices {
 
     await this.repository.createService({
       name,
-      icon: input.icon.trim() || "🛁",
+      icon: input.icon.trim() || "bath",
       durationMinutes: Math.round(input.durationMinutes),
       price: input.price,
       isActive: input.isActive,

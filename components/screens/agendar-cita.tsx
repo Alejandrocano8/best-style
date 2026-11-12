@@ -1,6 +1,7 @@
 import { ClientSidebar } from "@/components/client-sidebar";
 import { GotoLink } from "@/components/nav-context";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
+import { CheckIcon, PetIcon, ServiceIcon } from "@/components/icons";
 
 export function AgendarCita({ data }: { data: PrototypeData }) {
   return (
@@ -17,12 +18,16 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
 
           <div className="steps-bar">
             <div className="step-item done">
-              <div className="step-circle">✓</div>
+              <div className="step-circle">
+                <CheckIcon size={14} />
+              </div>
               <div className="step-label">Mascota</div>
             </div>
             <div className="step-line"></div>
             <div className="step-item done">
-              <div className="step-circle">✓</div>
+              <div className="step-circle">
+                <CheckIcon size={14} />
+              </div>
               <div className="step-label">Servicio</div>
             </div>
             <div className="step-line"></div>
@@ -44,7 +49,9 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
             <div className="pick-grid">
               {data.pets.map((pet, index) => (
                 <div className={`pick-card${index === 0 ? " selected" : ""}`} key={pet.id}>
-                  <div className="ic">{pet.icon}</div>
+                  <div className="ic">
+                    <PetIcon species={pet.species} icon={pet.icon} size={28} />
+                  </div>
                   <div className="name">{pet.name}</div>
                   <div className="price">{pet.breed}</div>
                 </div>
@@ -59,7 +66,9 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
                   className={`pick-card${service.id === "service-2" ? " selected" : ""}`}
                   key={service.id}
                 >
-                  <div className="ic">{service.icon}</div>
+                  <div className="ic">
+                    <ServiceIcon name={service.name} icon={service.icon} size={26} />
+                  </div>
                   <div className="name">{service.name}</div>
                   <div className="price">${service.price.toLocaleString("es-CO")}</div>
                 </div>
@@ -98,7 +107,7 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
               <GotoLink to="mis-citas" className="btn btn-primary">
                 Confirmar cita
               </GotoLink>
-              <GotoLink to="mascotas" className="btn btn-ghost">
+              <GotoLink to="dashboard-cliente" className="btn btn-ghost">
                 Cancelar
               </GotoLink>
             </div>
