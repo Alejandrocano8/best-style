@@ -4,6 +4,9 @@ import {
   EarCareIcon,
   HeroPetIllustration,
   ScissorsIcon,
+  PawIcon,
+  SparklesIcon,
+  CheckIcon,
 } from "@/components/icons";
 
 export function Landing() {
@@ -15,9 +18,9 @@ export function Landing() {
           <div className="brand-name">Best Style</div>
         </div>
         <div className="pub-links">
-          <a href="#">Servicios</a>
-          <a href="#">Cómo funciona</a>
-          <a href="#">Ubicación</a>
+          <a href="#servicios">Servicios</a>
+          <a href="#como-funciona">Cómo funciona</a>
+          <a href="#ubicacion">Ubicación</a>
           <GotoLink to="login">Iniciar sesión</GotoLink>
           <GotoLink to="agendar-cita" className="btn btn-primary btn-sm">
             Agendar cita
@@ -61,50 +64,117 @@ export function Landing() {
         </div>
       </div>
 
-      <div className="lp-section">
-        <div className="lp-section-head">
-          <h2>Nuestros servicios</h2>
-          <p>Tratamientos pensados para la higiene, salud y bienestar de tu mascota.</p>
+      {/* ── ABOUT / PRESENTACIÓN ─────────────────────────── */}
+      <div className="lp-about">
+        <div className="lp-about-badge">
+          <PawIcon size={14} />
+          <span>Estética Veterinaria · Pradera, Valle del Cauca</span>
         </div>
-        <div className="lp-service-row">
-          <div className="lp-service-icon">
-            <BathIcon size={26} />
+        <h2>Cuidado profesional para tu mejor amigo</h2>
+        <p>
+          En <strong>Best Style</strong> creemos que cada mascota merece atención personalizada, higiénica y sin
+          estrés. Nuestro equipo combina técnica, amor y los mejores productos del mercado para que tu peludo luzca
+          y se sienta increíble.
+        </p>
+        <div className="lp-about-pillars">
+          <div className="lp-pillar">
+            <div className="lp-pillar-icon">
+              <SparklesIcon size={22} />
+            </div>
+            <h4>Productos premium</h4>
+            <p>Shampoos hipoalergénicos, acondicionadores y lociones de alta gama seleccionados para cada tipo de pelaje.</p>
           </div>
-          <div>
-            <h3>Baño</h3>
-            <p>Baño con productos hipoalergénicos, secado y cepillado según el tipo de pelaje.</p>
+          <div className="lp-pillar">
+            <div className="lp-pillar-icon">
+              <CheckIcon size={22} />
+            </div>
+            <h4>Atención personalizada</h4>
+            <p>Cada mascota recibe un trato individual: evaluamos su historial, temperamento y necesidades antes de comenzar.</p>
           </div>
-          <div className="lp-service-price">
-            Desde <b>$25.000</b>
-          </div>
-        </div>
-        <div className="lp-service-row">
-          <div className="lp-service-icon">
-            <ScissorsIcon size={26} />
-          </div>
-          <div>
-            <h3>Corte de pelo</h3>
-            <p>Corte a tijera o máquina, adaptado a la raza y preferencia del propietario.</p>
-          </div>
-          <div className="lp-service-price">
-            Desde <b>$35.000</b>
-          </div>
-        </div>
-        <div className="lp-service-row">
-          <div className="lp-service-icon">
-            <EarCareIcon size={26} />
-          </div>
-          <div>
-            <h3>Limpieza de oídos</h3>
-            <p>Limpieza preventiva para evitar infecciones y molestias auditivas.</p>
-          </div>
-          <div className="lp-service-price">
-            Desde <b>$15.000</b>
+          <div className="lp-pillar">
+            <div className="lp-pillar-icon">
+              <PawIcon size={22} />
+            </div>
+            <h4>Espacio sin estrés</h4>
+            <p>Instalaciones limpias, tranquilas y diseñadas para que tu mascota se sienta segura durante todo el proceso.</p>
           </div>
         </div>
       </div>
 
-      <div className="lp-steps">
+      {/* ── SERVICIOS ─────────────────────────────────────── */}
+      <div className="lp-section" id="servicios">
+        <div className="lp-section-head">
+          <h2>Nuestros servicios</h2>
+          <p>Tratamientos pensados para la higiene, salud y bienestar de tu mascota.</p>
+        </div>
+
+        {/* Cards de servicios */}
+        <div className="lp-service-cards">
+          <div className="lp-svc-card">
+            <div className="lp-svc-card-icon">
+              <BathIcon size={30} />
+            </div>
+            <div className="lp-svc-card-badge">Popular</div>
+            <h3>Baño completo</h3>
+            <p>Baño con shampoo y acondicionador hipoalergénico, secado profesional, cepillado y perfume. Incluye limpieza de patas y zona facial.</p>
+            <ul className="lp-svc-includes">
+              <li><CheckIcon size={13} /> Shampoo hipoalergénico</li>
+              <li><CheckIcon size={13} /> Secado y cepillado</li>
+              <li><CheckIcon size={13} /> Perfume para mascotas</li>
+              <li><CheckIcon size={13} /> Limpieza de patas</li>
+            </ul>
+            <div className="lp-svc-card-footer">
+              <span className="lp-svc-price">Desde <b>$25.000</b></span>
+              <GotoLink to="agendar-cita" className="btn btn-sm btn-primary">Agendar</GotoLink>
+            </div>
+          </div>
+
+          <div className="lp-svc-card lp-svc-card--featured">
+            <div className="lp-svc-card-icon">
+              <ScissorsIcon size={30} />
+            </div>
+            <div className="lp-svc-card-badge lp-svc-card-badge--gold">Recomendado</div>
+            <h3>Baño + Corte de pelo</h3>
+            <p>El paquete completo: baño higiénico más corte a tijera o máquina adaptado a la raza y la preferencia del propietario. Tu mascota queda lista para brillar.</p>
+            <ul className="lp-svc-includes">
+              <li><CheckIcon size={13} /> Todo lo del baño</li>
+              <li><CheckIcon size={13} /> Corte a tijera o máquina</li>
+              <li><CheckIcon size={13} /> Modelado según raza</li>
+              <li><CheckIcon size={13} /> Acabado profesional</li>
+            </ul>
+            <div className="lp-svc-card-footer">
+              <span className="lp-svc-price">Desde <b>$55.000</b></span>
+              <GotoLink to="agendar-cita" className="btn btn-sm btn-primary">Agendar</GotoLink>
+            </div>
+          </div>
+
+          <div className="lp-svc-card">
+            <div className="lp-svc-card-icon">
+              <EarCareIcon size={30} />
+            </div>
+            <h3>Limpieza de oídos</h3>
+            <p>Limpieza preventiva con productos especializados para evitar acumulación de suciedad, infecciones y molestias auditivas. Ideal como mantenimiento mensual.</p>
+            <ul className="lp-svc-includes">
+              <li><CheckIcon size={13} /> Limpieza profunda</li>
+              <li><CheckIcon size={13} /> Productos especializados</li>
+              <li><CheckIcon size={13} /> Revisión de conducto</li>
+              <li><CheckIcon size={13} /> Sin dolor ni estrés</li>
+            </ul>
+            <div className="lp-svc-card-footer">
+              <span className="lp-svc-price">Desde <b>$15.000</b></span>
+              <GotoLink to="agendar-cita" className="btn btn-sm btn-primary">Agendar</GotoLink>
+            </div>
+          </div>
+        </div>
+
+        {/* Nota adicional */}
+        <div className="lp-svc-note">
+          Los precios varían según el tamaño y la raza de tu mascota.
+          <GotoLink to="agendar-cita" className="lp-svc-note-link">Consulta sin compromiso</GotoLink>
+        </div>
+      </div>
+
+      <div className="lp-steps" id="como-funciona">
         <div className="lp-step">
           <div className="lp-step-num">1</div>
           <h4>Crea tu cuenta</h4>
