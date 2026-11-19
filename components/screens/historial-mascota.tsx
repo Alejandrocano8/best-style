@@ -1,6 +1,7 @@
 import { ClientSidebar } from "@/components/client-sidebar";
 import { GotoLink } from "@/components/nav-context";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
+import { PetIcon } from "@/components/icons";
 
 export function HistorialMascota({ data }: { data: PrototypeData }) {
   const pet = data.pets[0];
@@ -20,7 +21,9 @@ export function HistorialMascota({ data }: { data: PrototypeData }) {
             </GotoLink>
           </div>
           <div className="pet-header">
-            <div className="photo-lg">{pet.icon}</div>
+            <div className="photo-lg">
+              <PetIcon species={pet.species} icon={pet.icon} size={48} />
+            </div>
             <div>
               <h2>{pet.name}</h2>
               <div className="tags">

@@ -4,6 +4,7 @@ import { ClientSidebar } from "@/components/client-sidebar";
 import { GotoLink, useAuth } from "@/components/nav-context";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
 import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
+import { PetIcon } from "@/components/icons";
 
 export function DashboardCliente({ data }: { data: PrototypeData }) {
   const { user } = useAuth();
@@ -21,7 +22,7 @@ export function DashboardCliente({ data }: { data: PrototypeData }) {
         <div className="main-area">
           <div className="topbar">
             <div>
-              <h1>Hola, {firstName} 👋</h1>
+              <h1>Hola, {firstName}</h1>
               <div className="sub">Esto es lo que tienes programado esta semana.</div>
             </div>
             <GotoLink to="agendar-cita" className="btn btn-primary btn-sm">
@@ -86,10 +87,14 @@ export function DashboardCliente({ data }: { data: PrototypeData }) {
               </div>
               {data.pets.map((pet) => (
                 <div className="appt-row" key={pet.id}>
+                  <div
+                    className="row-avatar"
+                    style={{ background: "var(--pine-pale)", color: "var(--pine-dark)" }}
+                  >
+                    <PetIcon species={pet.species} icon={pet.icon} size={16} />
+                  </div>
                   <div className="appt-info">
-                    <div className="name">
-                      {pet.icon} {pet.name}
-                    </div>
+                    <div className="name">{pet.name}</div>
                     <div className="meta">
                       {pet.breed} · {pet.ageYears} {pet.ageYears === 1 ? "año" : "años"}
                     </div>

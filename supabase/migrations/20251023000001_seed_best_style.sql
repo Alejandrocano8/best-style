@@ -14,14 +14,14 @@ INSERT INTO clients (id, name, initials, national_id, phone, pet_count, last_app
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO pets (id, name, species, breed, sex, age_years, owner_id, owner_name, icon) VALUES
-  ('20000000-0000-0000-0000-000000000001', 'Rocky', 'Perro', 'Labrador', 'Macho', 3, '10000000-0000-0000-0000-000000000001', 'Laura Gómez', '🐕'),
-  ('20000000-0000-0000-0000-000000000002', 'Mishi', 'Gato', 'Gato criollo', 'Hembra', 1, '10000000-0000-0000-0000-000000000001', 'Laura Gómez', '🐈')
+  ('20000000-0000-0000-0000-000000000001', 'Rocky', 'Perro', 'Labrador', 'Macho', 3, '10000000-0000-0000-0000-000000000001', 'Laura Gómez', 'dog'),
+  ('20000000-0000-0000-0000-000000000002', 'Mishi', 'Gato', 'Gato criollo', 'Hembra', 1, '10000000-0000-0000-0000-000000000001', 'Laura Gómez', 'cat')
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO services (id, name, icon, duration_minutes, price, is_active, request_percentage) VALUES
-  ('30000000-0000-0000-0000-000000000001', 'Baño', '🛁', 45, 25000, true, 42),
-  ('30000000-0000-0000-0000-000000000002', 'Corte de pelo', '✂️', 60, 35000, true, 38),
-  ('30000000-0000-0000-0000-000000000003', 'Limpieza de oídos', '👂', 20, 15000, false, 20)
+  ('30000000-0000-0000-0000-000000000001', 'Baño', 'bath', 45, 25000, true, 42),
+  ('30000000-0000-0000-0000-000000000002', 'Corte de pelo', 'scissors', 60, 35000, true, 38),
+  ('30000000-0000-0000-0000-000000000003', 'Limpieza de oídos', 'ear', 20, 15000, false, 20)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO appointments (id, owner_id, owner_name, pet_id, pet_name, service_id, service_name, appointment_date, appointment_time, status, veterinarian) VALUES

@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AdminModal } from "@/components/admin-modal";
 import { AdminSidebar } from "@/components/admin-sidebar";
+import { PencilIcon, ServiceIcon } from "@/components/icons";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
 import type { Service } from "@/domain/entities/service";
 
@@ -34,7 +35,7 @@ function ServiceForm({
 }) {
   const isEdit = Boolean(service);
   const [name, setName] = useState(service?.name ?? "");
-  const [icon, setIcon] = useState(service?.icon ?? "🛁");
+  const [icon, setIcon] = useState(service?.icon ?? "bath");
   const [durationMinutes, setDurationMinutes] = useState(String(service?.durationMinutes ?? 30));
   const [price, setPrice] = useState(String(service?.price ?? 0));
   const [isActive, setIsActive] = useState(service?.isActive ?? true);
@@ -95,15 +96,17 @@ function ServiceForm({
             />
           </div>
           <div className="field">
-            <label htmlFor="service-icon">Icono</label>
-            <input
+            <label htmlFor="service-icon">Icono del servicio</label>
+            <select
               id="service-icon"
-              type="text"
-              placeholder="🛁"
-              maxLength={4}
               value={icon}
               onChange={(event) => setIcon(event.target.value)}
-            />
+            >
+              <option value="bath">Baño e Higiene</option>
+              <option value="scissors">Corte y Estilismo</option>
+              <option value="ear">Limpieza y Cuidado</option>
+              <option value="sparkles">Servicio Especial</option>
+            </select>
           </div>
         </div>
 
@@ -224,7 +227,12 @@ export function GestionServicios({ data }: { data: PrototypeData }) {
                   <tr key={service.id}>
                     <td>
                       <div className="row-name">
-                        <div className="row-avatar">{service.icon}</div>
+                        <div
+                          className="row-avatar"
+                          style={{ background: "var(--pine-pale)", color: "var(--pine-dark)" }}
+                        >
+                          <ServiceIcon name={service.name} icon={service.icon} size={15} />
+                        </div>
                         {service.name}
                       </div>
                     </td>
@@ -246,7 +254,7 @@ export function GestionServicios({ data }: { data: PrototypeData }) {
                         onClick={() => setModal({ mode: "edit", service })}
                         aria-label={`Editar ${service.name}`}
                       >
-                        ✎
+                        <PencilIcon size={14} />
                       </button>
                     </td>
                   </tr>
