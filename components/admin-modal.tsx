@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { CloseIcon } from "@/components/icons";
 
 export function AdminModal({
   title,
@@ -29,7 +30,7 @@ export function AdminModal({
             {subtitle ? <p className="sub">{subtitle}</p> : null}
           </div>
           <button type="button" className="icon-btn" onClick={onClose} aria-label="Cerrar">
-            ✕
+            <CloseIcon size={14} />
           </button>
         </div>
         {children}

@@ -1,6 +1,7 @@
 import { ClientSidebar } from "@/components/client-sidebar";
 import { GotoLink } from "@/components/nav-context";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
+import { PetIcon } from "@/components/icons";
 
 export function Mascotas({ data }: { data: PrototypeData }) {
   return (
@@ -20,7 +21,9 @@ export function Mascotas({ data }: { data: PrototypeData }) {
           <div className="pets-grid">
             {data.pets.map((pet) => (
               <div className="pet-card" key={pet.id}>
-                <div className="pet-photo">{pet.icon}</div>
+                <div className="pet-photo">
+                  <PetIcon species={pet.species} icon={pet.icon} size={48} />
+                </div>
                 <div className="pet-body">
                   <h4>{pet.name}</h4>
                   <div className="meta">

@@ -4,6 +4,7 @@ import { useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AdminModal } from "@/components/admin-modal";
 import { AdminSidebar } from "@/components/admin-sidebar";
+import { ChevronRightIcon } from "@/components/icons";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
 
 async function sendRequest(url: string, method: string, body: unknown) {
@@ -177,8 +178,8 @@ export function GestionClientes({ data }: { data: PrototypeData }) {
                     <td>{client.petCount}</td>
                     <td>{client.lastAppointment || "—"}</td>
                     <td>
-                      <button className="icon-btn" type="button">
-                        →
+                      <button className="icon-btn" type="button" aria-label="Ver detalles">
+                        <ChevronRightIcon size={14} />
                       </button>
                     </td>
                   </tr>
