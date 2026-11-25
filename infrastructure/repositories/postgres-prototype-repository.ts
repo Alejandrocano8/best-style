@@ -173,6 +173,7 @@ export class PostgresPrototypeRepository implements PrototypeRepository {
       petName: row.pet_name,
       serviceName: row.service_name,
       date: formatDate(row.date),
+      dateIso: row.date,
       time: formatTime(row.time),
       status: row.status,
       veterinarian: row.veterinarian ?? undefined,
