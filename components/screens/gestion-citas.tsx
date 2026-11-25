@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { AdminModal } from "@/components/admin-modal";
+import { AppointmentCalendar } from "@/components/appointment-calendar";
 import { AdminSidebar } from "@/components/admin-sidebar";
 import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
 import type { Appointment, AppointmentStatus } from "@/domain/entities/appointment";
@@ -45,25 +46,12 @@ function todayIso() {
   return new Date(now.getTime() - offset * 60_000).toISOString().slice(0, 10);
 }
 
-function dateToIso(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+function displayTimeToInput(value: string): string {
+  const match = value.match(/^(\d{1,2}):(\d{2})\s*(am|pm)$/i);
+  if (!match) return "09:00";
 
-function appointmentDateToIso(value: string) {
-  const isoDate = value.match(/^(\d{4}-\d{2}-\d{2})/);
-  if (isoDate) return isoDate[1];
-
-  const localizedDate = value.toLowerCase().match(/^(\d{1,2})\s+([a-záéíóú]+)\s+(\d{4})$/);
-  if (!localizedDate) return null;
-
-  const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
-  const month = months.indexOf(localizedDate[2].slice(0, 3));
-  if (month < 0) return null;
-
-  return `${localizedDate[3]}-${String(month + 1).padStart(2, "0")}-${localizedDate[1].padStart(2, "0")}`;
+  const hour = Number(match[1]) % 12 + (match[3].toLowerCase() === "pm" ? 12 : 0);
+  return `${String(hour).padStart(2, "0")}:${match[2]}`;
 }
 
 function NewAppointmentForm({
@@ -291,6 +279,8 @@ function EditAppointmentForm({
   onSaved: () => void;
 }) {
   const [status, setStatus] = useState<AppointmentStatus>(appointment.status);
+  const [date, setDate] = useState(appointment.dateIso);
+  const [time, setTime] = useState(displayTimeToInput(appointment.time));
   const [veterinarianId, setVeterinarianId] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -310,6 +300,8 @@ function EditAppointmentForm({
     try {
       await sendRequest(`/api/admin/appointments/${appointment.id}`, "PATCH", {
         status,
+        date,
+        time,
         ...(veterinarian
           ? { veterinarianId: veterinarian.id, veterinarian: veterinarian.name }
           : {}),
@@ -330,6 +322,29 @@ function EditAppointmentForm({
       onClose={onClose}
     >
       <form onSubmit={handleSubmit} noValidate>
+        <div className="field-row">
+          <div className="field">
+            <label htmlFor="edit-appointment-date">Fecha</label>
+            <input
+              id="edit-appointment-date"
+              type="date"
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
+              required
+            />
+          </div>
+          <div className="field">
+            <label htmlFor="edit-appointment-time">Hora</label>
+            <input
+              id="edit-appointment-time"
+              type="time"
+              value={time}
+              onChange={(event) => setTime(event.target.value)}
+              required
+            />
+          </div>
+        </div>
+
         <div className="field">
           <label htmlFor="edit-appointment-status">Estado</label>
           <select
@@ -382,57 +397,39 @@ function EditAppointmentForm({
 
 export function GestionCitas({ data }: { data: PrototypeData }) {
   const router = useRouter();
-  const [today, setToday] = useState(todayIso);
+  const [month, setMonth] = useState(() => todayIso().slice(0, 7));
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<FilterId>("todas");
   const [creating, setCreating] = useState(false);
   const [editing, setEditing] = useState<Appointment | null>(null);
 
-  useEffect(() => {
-    const interval = window.setInterval(() => setToday(todayIso()), 60_000);
-    return () => window.clearInterval(interval);
-  }, []);
-
-  const weekDays = useMemo(() => {
-    const [year, month, day] = today.split("-").map(Number);
-    const currentDate = new Date(year, month - 1, day);
-    const monday = new Date(year, month - 1, day - ((currentDate.getDay() + 6) % 7));
-
-    return Array.from({ length: 7 }, (_, index) => {
-      const date = new Date(monday);
-      date.setDate(monday.getDate() + index);
-      const isoDate = dateToIso(date);
-      const count = data.appointments.filter(
-        (appointment) => appointmentDateToIso(appointment.date) === isoDate,
-      ).length;
-
-      return { date, isoDate, count };
-    });
-  }, [data.appointments, today]);
-
-  const weekRange = `${new Intl.DateTimeFormat("es-CO", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(weekDays[0].date)} al ${new Intl.DateTimeFormat("es-CO", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(weekDays[6].date)}`;
+  const calendarAppointments = useMemo(
+    () =>
+      data.appointments.map((appointment) => ({
+        id: appointment.id,
+        dateIso: appointment.dateIso,
+        time: appointment.time,
+        label: `${appointment.petName} · ${appointment.ownerName}`,
+        status: appointment.status,
+      })),
+    [data.appointments],
+  );
 
   const appointments = useMemo(() => {
     const term = query.trim().toLowerCase();
 
     return data.appointments.filter((appointment) => {
       const matchesFilter = filter === "todas" || appointment.status === filter;
+      const matchesDate = !selectedDate || appointment.dateIso === selectedDate;
       const matchesQuery =
         !term ||
         `${appointment.ownerName} ${appointment.petName} ${appointment.serviceName}`
           .toLowerCase()
           .includes(term);
-      return matchesFilter && matchesQuery;
+      return matchesFilter && matchesDate && matchesQuery;
     });
-  }, [data.appointments, filter, query]);
+  }, [data.appointments, filter, query, selectedDate]);
 
   function handleSaved() {
     setCreating(false);
@@ -451,7 +448,16 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
               <div className="sub">Consulta y organiza la agenda de la clínica.</div>
             </div>
             <div style={{ display: "flex", gap: "10px" }}>
-              <button className="btn btn-ghost btn-sm">📅 Vista calendario</button>
+              <button
+                type="button"
+                className="btn btn-ghost btn-sm"
+                onClick={() => {
+                  setMonth(todayIso().slice(0, 7));
+                  setSelectedDate(null);
+                }}
+              >
+                📅 Ir a hoy
+              </button>
               <button
                 type="button"
                 className="btn btn-primary btn-sm"
@@ -464,28 +470,31 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
 
           <div className="panel">
             <div className="panel-head">
-              <h3>Semana del {weekRange}</h3>
+              <h3>Calendario de citas</h3>
+              {selectedDate ? (
+                <button
+                  type="button"
+                  className="btn btn-ghost btn-sm"
+                  onClick={() => setSelectedDate(null)}
+                >
+                  Limpiar fecha
+                </button>
+              ) : null}
             </div>
-            <div className="cal-grid">
-              {["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"].map((day) => (
-                <div className="cal-day-head" key={day}>
-                  {day}
-                </div>
-              ))}
-              {weekDays.map(({ date, isoDate, count }) => (
-                <div className={`cal-cell${isoDate === today ? " today" : ""}`} key={isoDate}>
-                  {date.getDate()}
-                  {count > 0 ? (
-                    <>
-                      <br />
-                      <span className="cal-dot">
-                        {count} {count === 1 ? "cita" : "citas"}
-                      </span>
-                    </>
-                  ) : null}
-                </div>
-              ))}
-            </div>
+            <AppointmentCalendar
+              appointments={calendarAppointments}
+              month={month}
+              onMonthChange={setMonth}
+              selectedDate={selectedDate}
+              onSelectDate={(date) => {
+                setSelectedDate(date);
+                if (date) setMonth(date.slice(0, 7));
+              }}
+              onSelectAppointment={(id) => {
+                const appointment = data.appointments.find((item) => item.id === id);
+                if (appointment) setEditing(appointment);
+              }}
+            />
           </div>
 
           <div className="panel">
@@ -529,7 +538,7 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
                       <td>{appointment.ownerName}</td>
                       <td>{appointment.petName}</td>
                       <td>{appointment.serviceName}</td>
-                      <td>{appointment.date.split(" ").slice(0, 2).join(" ")}</td>
+                      <td>{appointment.date}</td>
                       <td>{appointment.time}</td>
                       <td>
                         <span className={`chip ${status.className}`}>{status.label}</span>

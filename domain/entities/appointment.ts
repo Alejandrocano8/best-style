@@ -6,6 +6,7 @@ export type Appointment = {
   petName: string;
   serviceName: string;
   date: string;
+  dateIso: string;
   time: string;
   status: AppointmentStatus;
   veterinarian?: string;

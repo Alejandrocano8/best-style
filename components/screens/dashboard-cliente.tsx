@@ -5,14 +5,33 @@ import { GotoLink, useAuth } from "@/components/nav-context";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
 import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
 
+function todayIso(): string {
+  const now = new Date();
+  const offset = now.getTimezoneOffset();
+  return new Date(now.getTime() - offset * 60_000).toISOString().slice(0, 10);
+}
+
 export function DashboardCliente({ data }: { data: PrototypeData }) {
   const { user } = useAuth();
-  const firstName = user?.name.split(" ")[0] ?? "Laura";
-  const upcomingAppointments = data.appointments.filter(
-    (appointment) =>
-      appointment.ownerName === "Laura Gómez" &&
-      ["18 sep 2026", "22 sep 2026"].includes(appointment.date),
+  const firstName = user?.name.split(" ")[0] ?? "Cliente";
+
+  const myAppointments = data.appointments.filter(
+    (appointment) => appointment.ownerName === user?.name,
   );
+  const upcomingAppointments = myAppointments
+    .filter(
+      (appointment) =>
+        ["pending", "confirmed"].includes(appointment.status) &&
+        appointment.dateIso >= todayIso(),
+    )
+    .sort((a, b) => a.dateIso.localeCompare(b.dateIso));
+  const nextAppointment = upcomingAppointments[0];
+  const myPets = data.pets.filter((pet) => pet.ownerName === user?.name);
+
+  const completedAppointments = myAppointments.filter(
+    (appointment) => appointment.status === "completed",
+  ).length;
+  const pendingAppointments = upcomingAppointments.length;
 
   return (
     <section className="screen active" id="dashboard-cliente">
@@ -31,20 +50,26 @@ export function DashboardCliente({ data }: { data: PrototypeData }) {
           <div className="kpi-grid">
             <div className="kpi-card">
               <div className="kpi-label">Mascotas registradas</div>
-              <div className="kpi-value">{data.pets.length}</div>
+              <div className="kpi-value">{myPets.length}</div>
             </div>
             <div className="kpi-card">
               <div className="kpi-label">Próxima cita</div>
-              <div className="kpi-value">Vie 18</div>
-              <div className="kpi-delta">Corte de pelo · Rocky</div>
+              <div className="kpi-value">
+                {nextAppointment ? nextAppointment.date.split(" ").slice(0, 2).join(" ") : "—"}
+              </div>
+              <div className="kpi-delta">
+                {nextAppointment
+                  ? `${nextAppointment.serviceName} · ${nextAppointment.petName}`
+                  : "Agenda tu próxima cita"}
+              </div>
             </div>
             <div className="kpi-card">
               <div className="kpi-label">Citas realizadas</div>
-              <div className="kpi-value">{data.clientDashboard.completedAppointments}</div>
+              <div className="kpi-value">{completedAppointments}</div>
             </div>
             <div className="kpi-card">
               <div className="kpi-label">Citas pendientes</div>
-              <div className="kpi-value">{data.clientDashboard.pendingAppointments}</div>
+              <div className="kpi-value">{pendingAppointments}</div>
             </div>
           </div>
           <div className="two-col">
@@ -55,6 +80,9 @@ export function DashboardCliente({ data }: { data: PrototypeData }) {
                   Ver todas
                 </GotoLink>
               </div>
+              {upcomingAppointments.length === 0 ? (
+                <div className="table-empty">No tienes citas programadas.</div>
+              ) : null}
               {upcomingAppointments.map((appointment) => {
                 const status = getAppointmentStatusPresentation(appointment.status);
                 return (
@@ -84,7 +112,10 @@ export function DashboardCliente({ data }: { data: PrototypeData }) {
                   Ver todas
                 </GotoLink>
               </div>
-              {data.pets.map((pet) => (
+              {myPets.length === 0 ? (
+                <div className="table-empty">Aún no tienes mascotas registradas.</div>
+              ) : null}
+              {myPets.map((pet) => (
                 <div className="appt-row" key={pet.id}>
                   <div className="appt-info">
                     <div className="name">
