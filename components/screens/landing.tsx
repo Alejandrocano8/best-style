@@ -2,6 +2,22 @@
 
 import { useState } from "react";
 import { GotoLink } from "@/components/nav-context";
+import {
+  CameraIcon,
+  CheckIcon,
+  ChevronRightIcon,
+  ClockIcon,
+  LeafIcon,
+  MapPinIcon,
+  PawIcon,
+  RocketIcon,
+  ServiceIcon,
+  ShieldCheckIcon,
+  SmartphoneIcon,
+  SparklesIcon,
+  StarIcon,
+  StethoscopeIcon,
+} from "@/components/icons";
 
 interface ServiceItem {
   id: string;
@@ -26,7 +42,7 @@ const SERVICES: ServiceItem[] = [
     name: "Baño Completo & Spa",
     tagline: "Higiene profunda y bienestar relajante",
     category: "Higiene & Cuidado",
-    icon: "🛁",
+    icon: "bath",
     price: "$25.000",
     priceRaw: 25000,
     priceNote: "Desde",
@@ -52,7 +68,7 @@ const SERVICES: ServiceItem[] = [
     name: "Corte de Pelo & Estilismo",
     tagline: "Técnica profesional adaptada a cada raza",
     category: "Estética Canina",
-    icon: "✂️",
+    icon: "scissors",
     price: "$35.000",
     priceRaw: 35000,
     priceNote: "Desde",
@@ -77,7 +93,7 @@ const SERVICES: ServiceItem[] = [
     name: "Limpieza de Oídos & Cuidados",
     tagline: "Salud auditiva y prevención de infecciones",
     category: "Salud Preventiva",
-    icon: "👂",
+    icon: "ear",
     price: "$15.000",
     priceRaw: 15000,
     priceNote: "Desde",
@@ -133,7 +149,7 @@ export function Landing() {
       <div className="lp-hero">
         <div>
           <div className="lp-pill">
-            <span>✨</span>
+            <SparklesIcon size={14} />
             <span>Estética veterinaria de alta gama en Pradera</span>
           </div>
           <h1>
@@ -145,7 +161,8 @@ export function Landing() {
           </p>
           <div className="lp-hero-actions">
             <GotoLink to="agendar-cita" className="btn btn-primary">
-              Agendar una cita →
+              <span>Agendar una cita</span>
+              <ChevronRightIcon size={16} />
             </GotoLink>
             <GotoLink to="registro-cliente" className="btn btn-ghost">
               Crear cuenta
@@ -161,7 +178,9 @@ export function Landing() {
               <span>Mascotas atendidas</span>
             </div>
             <div>
-              <b>4.9 ★</b>
+              <b style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                4.9 <StarIcon size={18} style={{ color: "#f59e0b" }} />
+              </b>
               <span>Calificación de clientes</span>
             </div>
             <div>
@@ -174,7 +193,7 @@ export function Landing() {
         {/* Hero visual con imagen destacada y tarjetas flotantes */}
         <div className="lp-hero-showcase">
           <div className="lp-floating-badge">
-            <span>⭐</span>
+            <StarIcon size={15} style={{ color: "#f59e0b" }} />
             <span>4.9 / 5 · Máxima satisfacción</span>
           </div>
 
@@ -203,7 +222,7 @@ export function Landing() {
         <div className="lp-section-head">
           <div>
             <div className="lp-pill">
-              <span>🐾</span>
+              <PawIcon size={14} />
               <span>Nuestros Servicios Especializados</span>
             </div>
             <h2>El cuidado que tu mascota merece</h2>
@@ -231,9 +250,17 @@ export function Landing() {
               >
                 {/* Cabecera del servicio (siempre visible) */}
                 <div className="lp-service-header">
-                  <div className="lp-service-icon-box">{service.icon}</div>
+                  <div className="lp-service-icon-box">
+                    <ServiceIcon icon={service.icon} size={26} />
+                  </div>
                   <span className={`lp-service-badge ${service.popular ? "popular" : ""}`}>
-                    {service.popular ? "★ Más solicitado" : service.category}
+                    {service.popular ? (
+                      <span style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                        <StarIcon size={12} /> Más solicitado
+                      </span>
+                    ) : (
+                      service.category
+                    )}
                   </span>
                 </div>
 
@@ -251,7 +278,9 @@ export function Landing() {
                 {/* Indicador interactivo */}
                 <div className="lp-expand-prompt">
                   <span>{expanded ? "Detalles desplegados" : "Pasa el mouse para ver detalles e imagen"}</span>
-                  <span className="chevron">▾</span>
+                  <span className="chevron" aria-hidden="true">
+                    <ChevronRightIcon size={14} />
+                  </span>
                 </div>
 
                 {/* ================================================================= */}
@@ -268,8 +297,8 @@ export function Landing() {
                       loading="lazy"
                     />
                     <div className="lp-service-image-tag">
-                      <span>📷</span>
-                      <span>Espacio de imagen · {service.name}</span>
+                      <CameraIcon size={13} />
+                      <span>Resultado Best Style · {service.category}</span>
                     </div>
                   </div>
 
@@ -283,20 +312,23 @@ export function Landing() {
                       </div>
                     </div>
                     <div className="lp-duration-pill">
-                      <span>⏱️ {service.duration}</span>
+                      <ClockIcon size={14} />
+                      <span>{service.duration}</span>
                     </div>
                   </div>
 
                   {/* 3. CARACTERÍSTICAS DEL SERVICIO DESPLEGADAS */}
                   <div className="lp-service-features">
                     <div className="lp-features-title">
-                      <span>✨</span>
+                      <SparklesIcon size={14} style={{ color: "var(--pine-dark)" }} />
                       <span>Características incluidas:</span>
                     </div>
                     <ul className="lp-features-list">
                       {service.features.map((feature, idx) => (
                         <li key={idx}>
-                          <span className="lp-check-icon">✓</span>
+                          <span className="lp-check-icon">
+                            <CheckIcon size={11} />
+                          </span>
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -308,7 +340,8 @@ export function Landing() {
                     to="agendar-cita"
                     className="btn btn-primary lp-service-btn"
                   >
-                    Agendar {service.name} →
+                    <span>Agendar {service.name}</span>
+                    <ChevronRightIcon size={15} />
                   </GotoLink>
                 </div>
               </div>
@@ -322,7 +355,7 @@ export function Landing() {
         <div className="lp-section-head">
           <div>
             <div className="lp-pill">
-              <span>🚀</span>
+              <RocketIcon size={14} />
               <span>Proceso Simple y Rápido</span>
             </div>
             <h2>Cómo funciona Best Style</h2>
@@ -359,15 +392,28 @@ export function Landing() {
 
       {/* ---------- TESTIMONIAL Y CONFIANZA ---------- */}
       <div className="lp-quote">
-        <div className="lp-quote-stars">★★★★★</div>
+        <div className="lp-quote-stars" aria-label="5 de 5 estrellas">
+          {Array.from({ length: 5 }).map((_, i) => (
+            <StarIcon key={i} size={18} />
+          ))}
+        </div>
         <p>
           &quot;Antes perdíamos el hilo del historial y citas de cada mascota. Ahora todo queda registrado en un mismo lugar y podemos consultarlo en segundos para brindar la mejor atención.&quot;
         </p>
         <span className="author">— Equipo Profesional de Best Style</span>
         <div className="lp-quote-chips">
-          <span>🌿 Productos hipoalergénicos certificados</span>
-          <span>🧼 Instrumental esterilizado y seguro</span>
-          <span>🩺 Trato cariñoso y sin estrés</span>
+          <span>
+            <LeafIcon size={14} style={{ color: "var(--pine-dark)" }} />
+            Productos hipoalergénicos certificados
+          </span>
+          <span>
+            <ShieldCheckIcon size={14} style={{ color: "var(--pine-dark)" }} />
+            Instrumental esterilizado y seguro
+          </span>
+          <span>
+            <StethoscopeIcon size={14} style={{ color: "var(--pine-dark)" }} />
+            Trato cariñoso y sin estrés
+          </span>
         </div>
       </div>
 
@@ -376,7 +422,7 @@ export function Landing() {
         <div className="lp-section-head">
           <div>
             <div className="lp-pill">
-              <span>📍</span>
+              <MapPinIcon size={14} />
               <span>Visítanos en Pradera</span>
             </div>
             <h2>Ubicación y Atención</h2>
@@ -388,21 +434,27 @@ export function Landing() {
 
         <div className="lp-location-grid">
           <div className="lp-location-card">
-            <div className="lp-location-icon">📍</div>
+            <div className="lp-location-icon">
+              <MapPinIcon size={20} />
+            </div>
             <div>
               <h4>Dirección</h4>
               <p>Pradera, Valle del Cauca · Instalaciones diseñadas para la comodidad animal.</p>
             </div>
           </div>
           <div className="lp-location-card">
-            <div className="lp-location-icon">🕒</div>
+            <div className="lp-location-icon">
+              <ClockIcon size={20} />
+            </div>
             <div>
               <h4>Horarios de atención</h4>
               <p>Lunes a Sábado: 8:00 AM – 6:00 PM (Servicio con cita previa confirmada).</p>
             </div>
           </div>
           <div className="lp-location-card">
-            <div className="lp-location-icon">📱</div>
+            <div className="lp-location-icon">
+              <SmartphoneIcon size={20} />
+            </div>
             <div>
               <h4>Agendamiento Digital</h4>
               <p>Plataforma disponible 24/7 para reservar tu turno sin llamadas ni esperas.</p>
@@ -420,7 +472,8 @@ export function Landing() {
           </p>
         </div>
         <GotoLink to="agendar-cita" className="btn">
-          Agendar una cita ahora →
+          <span>Agendar una cita ahora</span>
+          <ChevronRightIcon size={16} />
         </GotoLink>
       </div>
 

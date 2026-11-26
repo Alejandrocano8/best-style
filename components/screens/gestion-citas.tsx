@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { AdminModal } from "@/components/admin-modal";
 import { AppointmentCalendar } from "@/components/appointment-calendar";
 import { AdminSidebar } from "@/components/admin-sidebar";
+import { CalendarIcon, PencilIcon } from "@/components/icons";
 import { getAppointmentStatusPresentation } from "@/components/screens/appointment-presentation";
 import type { Appointment, AppointmentStatus } from "@/domain/entities/appointment";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
@@ -456,7 +457,7 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
                   setSelectedDate(null);
                 }}
               >
-                📅 Ir a hoy
+                <><CalendarIcon size={14} style={{ marginRight: 4 }} />Ir a hoy</>
               </button>
               <button
                 type="button"
@@ -549,9 +550,7 @@ export function GestionCitas({ data }: { data: PrototypeData }) {
                           className="icon-btn"
                           onClick={() => setEditing(appointment)}
                           aria-label="Editar cita"
-                        >
-                          ✎
-                        </button>
+                        ><PencilIcon size={14} /></button>
                       </td>
                     </tr>
                   );

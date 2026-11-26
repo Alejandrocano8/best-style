@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { ClientSidebar } from "@/components/client-sidebar";
+import { CheckIcon, PetIcon, PlusCircleIcon, ServiceIcon } from "@/components/icons";
 import { GotoLink, useAuth, useNav } from "@/components/nav-context";
 import type { PrototypeData } from "@/domain/entities/prototype-data";
 
@@ -161,12 +162,12 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
 
           <div className="steps-bar">
             <div className="step-item done">
-              <div className="step-circle">✓</div>
+              <div className="step-circle"><CheckIcon size={14} /></div>
               <div className="step-label">Mascota</div>
             </div>
             <div className="step-line"></div>
             <div className="step-item done">
-              <div className="step-circle">✓</div>
+              <div className="step-circle"><CheckIcon size={14} /></div>
               <div className="step-label">Servicio</div>
             </div>
             <div className="step-line"></div>
@@ -196,7 +197,7 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
                     setManualPet(false);
                   }}
                 >
-                  <div className="ic">{item.icon}</div>
+                  <div className="ic"><PetIcon icon={item.icon} species={item.species} name={item.name} size={22} /></div>
                   <div className="name">{item.name}</div>
                   <div className="price">{item.breed}</div>
                 </button>
@@ -209,7 +210,7 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
                   setPetId("");
                 }}
               >
-                <div className="ic">➕</div>
+                <div className="ic"><PlusCircleIcon size={20} /></div>
                 <div className="name">Otra mascota</div>
                 <div className="price">Escribe el nombre</div>
               </button>
@@ -238,7 +239,7 @@ export function AgendarCita({ data }: { data: PrototypeData }) {
                   key={item.id}
                   onClick={() => setServiceId(item.id)}
                 >
-                  <div className="ic">{item.icon}</div>
+                  <div className="ic"><ServiceIcon icon={item.icon} name={item.name} size={22} /></div>
                   <div className="name">{item.name}</div>
                   <div className="price">${item.price.toLocaleString("es-CO")}</div>
                 </button>
