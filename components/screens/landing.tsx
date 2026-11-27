@@ -430,8 +430,7 @@ export function Landing() {
             </div>
             <div>
               <h4>Dirección</h4>
-              <p>Pradera, Valle del Cauca · Instalaciones diseñadas para la comodidad animal.</p>
-            </div>
+              <p>Ubicados en el barrio Bosques de La Pradera, Pradera, Valle del Cauca, diagonal a la Ferretería Lucio.</p>            </div>
           </div>
           <div className="lp-location-card">
             <div className="lp-location-icon">
