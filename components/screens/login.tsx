@@ -9,9 +9,6 @@ import {
   useNav,
 } from "@/components/nav-context";
 import type { AuthenticatedUser } from "@/domain/entities/auth-user";
-import type { UserRole } from "@/domain/entities/user";
-
-const ROLES: UserRole[] = ["Cliente", "Veterinario", "Administrador"];
 
 type LoginResponse = {
   user?: AuthenticatedUser;
@@ -20,7 +17,6 @@ type LoginResponse = {
 
 export function Login() {
   const { goTo, signIn } = useNav();
-  const [role, setRole] = useState<UserRole>("Cliente");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -62,23 +58,8 @@ export function Login() {
       quote="Llevar el historial de cada mascota al día ya no depende de la memoria de nadie."
     >
       <h1>Inicia sesión</h1>
-      <p className="sub">Accede según tu tipo de usuario para continuar.</p>
+      <p className="sub">Ingresa tu correo y contraseña para continuar.</p>
       <form onSubmit={handleSubmit} noValidate>
-        <div className="role-tabs">
-          {ROLES.map((item) => (
-            <button
-              key={item}
-              type="button"
-              className={role === item ? "active" : ""}
-              onClick={() => {
-                setRole(item);
-                setError(null);
-              }}
-            >
-              {item}
-            </button>
-          ))}
-        </div>
         <div className="field">
           <label htmlFor="login-email">Correo electrónico</label>
           <input
