@@ -55,11 +55,11 @@ export function DashboardCliente({ data }: { data: PrototypeData }) {
               <p className="sub">Esto es lo que tienes programado esta semana para el cuidado de tus mascotas.</p>
             </div>
             <div className="dash-hero-actions">
-              <GotoLink to="registro-mascota" className="btn btn-ghost btn-sm">
+              <GotoLink to="registro-mascota" className="btn btn-sm dash-btn-outline">
                 <PawIcon size={15} />
                 <span>Registrar mascota</span>
               </GotoLink>
-              <GotoLink to="agendar-cita" className="btn btn-primary btn-sm">
+              <GotoLink to="agendar-cita" className="btn btn-sm dash-btn-light">
                 <CalendarPlusIcon size={15} />
                 <span>Nueva cita</span>
               </GotoLink>

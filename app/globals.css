@@ -2669,16 +2669,18 @@ button.toggle {
 
 /* ---------- CLIENT DASHBOARD POLISH ---------- */
 .dash-hero-banner {
-  background: linear-gradient(135deg, var(--pine-pale) 0%, #ffffff 70%);
-  border: 1px solid var(--rose-line);
+  background: linear-gradient(135deg, var(--pine-dark) 0%, #3b88b4 100%);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 20px;
-  padding: 26px 28px;
+  padding: 28px 30px;
   margin-bottom: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
   flex-wrap: wrap;
+  color: #ffffff;
+  box-shadow: 0 14px 32px rgba(44, 110, 147, 0.18);
 }
 
 .dash-eyebrow {
@@ -2686,19 +2688,19 @@ button.toggle {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--pine-dark);
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.8);
   margin-bottom: 6px;
 }
 
 .dash-hero-banner h1 {
   font-size: 28px;
-  color: var(--pine-dark);
+  color: #ffffff;
   margin: 0 0 6px;
 }
 
 .dash-hero-banner .sub {
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.86);
   font-size: 14px;
   margin: 0;
 }
@@ -2708,6 +2710,26 @@ button.toggle {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.dash-btn-light {
+  background: #ffffff;
+  color: var(--pine-dark);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.dash-btn-light:hover {
+  background: var(--pine-pale);
+}
+
+.dash-btn-outline {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.dash-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .dash-kpi-card {
