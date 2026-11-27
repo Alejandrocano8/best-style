@@ -70,7 +70,6 @@ export function RegistroCliente() {
             <input
               id="register-first-name"
               type="text"
-              placeholder="Laura"
               autoComplete="given-name"
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
@@ -82,7 +81,6 @@ export function RegistroCliente() {
             <input
               id="register-last-name"
               type="text"
-              placeholder="Gómez"
               autoComplete="family-name"
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
@@ -96,7 +94,6 @@ export function RegistroCliente() {
           <input
             id="register-phone"
             type="tel"
-            placeholder="300 000 0000"
             autoComplete="tel"
             value={phone}
             onChange={(event) => setPhone(event.target.value)}
@@ -107,7 +104,6 @@ export function RegistroCliente() {
           <input
             id="register-email"
             type="email"
-            placeholder="nombre@correo.com"
             autoComplete="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -119,7 +115,6 @@ export function RegistroCliente() {
           <input
             id="register-password"
             type="password"
-            placeholder="Crea una contraseña (mín. 8 caracteres)"
             autoComplete="new-password"
             minLength={8}
             value={password}
