@@ -205,15 +205,6 @@ export function Landing() {
               loading="eager"
             />
           </div>
-
-          <div className="lp-floating-card">
-            <div className="status-row">
-              <span className="lp-status-dot"></span>
-              <span>Cita confirmada</span>
-            </div>
-            <div className="name">Rocky · Golden Retriever</div>
-            <div className="meta">Corte de pelo & Spa · Vie 18, 11:00 am</div>
-          </div>
         </div>
       </div>
 
